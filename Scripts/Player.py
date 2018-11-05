@@ -101,9 +101,9 @@ class RunState:
     def draw(player):
 
         if player.dir == 1:
-            player.image.clip_draw(int(player.frame) * 148, 0, 149, 162, player.x, player.y)
+            player.image.clip_draw(int(player.frame) * 175, 0, 175, 162, player.x, player.y)
         else:
-            player.image.clip_draw(int(player.frame) * 129, 0, 120, 162, player.x, player.y)
+            player.image.clip_draw(int(player.frame) * 175, 162, 175, 162, player.x, player.y)
 
 
 
