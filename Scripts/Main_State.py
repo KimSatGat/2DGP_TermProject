@@ -7,6 +7,7 @@ import Game_FrameWork
 import Game_World
 
 from Player import Player
+from Moe_Tato import MoeTato
 from BackGround import BackGround
 
 
@@ -18,9 +19,11 @@ player = None
 def enter():
     global player
     player = Player()
+    moetato = MoeTato()
     background = BackGround()
     Game_World.add_object(background, 0)
     Game_World.add_object(player, 1)
+    Game_World.add_object(moetato, 1)
 
 
 def exit():

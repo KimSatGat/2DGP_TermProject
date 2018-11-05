@@ -6,7 +6,9 @@ from math import *
 
 import Game_World
 
-#timer = get_time()
+timer = get_time()
+jump_timer = None
+
 
 # Player Run Speed
 PIXEL_PER_METER = (10.0 / 0.3) # 10 pixel 30cm
@@ -21,7 +23,7 @@ ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
 FRAMES_PER_ACTION = 5
 
 # Player Event
-RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP, TOP_UP,TOP_DOWN, SPACE = range(7)
+RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP, TOP_UP,TOP_DOWN, GROUND, SPACE = range(8)
 
 key_event_table = {
     (SDL_KEYDOWN, SDLK_RIGHT): RIGHT_DOWN,
@@ -59,8 +61,6 @@ class IdleState:
 
     @staticmethod
     def exit(player, event):
-        if event == SPACE:
-            player.fire_ball()
         pass
 
     @staticmethod
@@ -120,13 +120,56 @@ class RunState:
             player.image.clip_draw(int(player.frame) * 175, 162, 175, 162, player.x, player.y)
 
 
+class JumpState:
 
+    @staticmethod
+    def enter(player, event):
+        player.image = load_image("C:\\GitHub\\2DGP_TermProject\\Resources\\Player\\Jump\\Player_Jump.png")
+        global timer, jump_timer
+        jump_timer = get_time()
+        if event == RIGHT_DOWN:
+            player.velocity += RUN_SPEED_PPS
+        elif event == LEFT_DOWN:
+            player.velocity -= RUN_SPEED_PPS
+        elif event == RIGHT_UP:
+            player.velocity -= RUN_SPEED_PPS
+        elif event == LEFT_UP:
+            player.velocity += RUN_SPEED_PPS
+        player.dir = clamp(-1, player.velocity, 1)
+
+    @staticmethod
+    def exit(player, event):
+        pass
+
+    @staticmethod
+    def do(player):
+        global timer, jump_timer
+        player.frame = (player.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * ACTION_PER_TIME * Game_FrameWork.frame_time) % 8
+
+        player.x += player.velocity * Game_FrameWork.frame_time
+        player.x = clamp(25, player.x, 1600 - 25)
+        if get_time() - jump_timer < 1:
+            player.y += RUN_SPEED_PPS * Game_FrameWork.frame_time
+        elif get_time() - jump_timer > 1:
+            player.y -= RUN_SPEED_PPS * Game_FrameWork.frame_time
+            if player.y <= 90:
+                player.y = 90
+                player.add_event(GROUND)
+
+
+    @staticmethod
+    def draw(player):
+        if player.dir == 1:
+            player.image.clip_draw(int(player.frame) * 80, 109, 80, 109, player.x, player.y)
+        else:
+            player.image.clip_draw(int(player.frame) * 80, 0, 80, 109, player.x, player.y)
 
 
 
 next_state_table = {
-    IdleState: {RIGHT_UP: RunState, LEFT_UP: RunState, RIGHT_DOWN: RunState, LEFT_DOWN: RunState, TOP_UP: IdleState, TOP_DOWN: IdleState ,SPACE: IdleState},
-    RunState: {RIGHT_UP: IdleState, LEFT_UP: IdleState, LEFT_DOWN: IdleState, RIGHT_DOWN: IdleState, SPACE: RunState}
+    IdleState: {RIGHT_UP: RunState, LEFT_UP: RunState, RIGHT_DOWN: RunState, LEFT_DOWN: RunState, TOP_UP: IdleState, TOP_DOWN: IdleState , SPACE: JumpState, GROUND: IdleState},
+    RunState: {RIGHT_UP: IdleState, LEFT_UP: IdleState, LEFT_DOWN: IdleState, RIGHT_DOWN: IdleState, TOP_UP: IdleState, TOP_DOWN: IdleState , SPACE: JumpState, GROUND: RunState},
+    JumpState: {RIGHT_UP: JumpState, LEFT_UP: JumpState, LEFT_DOWN: JumpState, RIGHT_DOWN: JumpState, TOP_UP: JumpState, TOP_DOWN: JumpState , SPACE: JumpState, GROUND :RunState},
 }
 
 class Player:
@@ -144,8 +187,9 @@ class Player:
         self.cur_state.enter(self, None)
 
     def fire_ball(self):
-        ball = Ball(self.x, self.y, self.dir*3)
-        Game_World.add_object(ball, 1)
+        pass
+        #ball = Ball(self.x, self.y, self.dir*3)
+        #Game_World.add_object(ball, 1)
 
     def add_event(self, event):
         self.event_que.insert(0, event)
