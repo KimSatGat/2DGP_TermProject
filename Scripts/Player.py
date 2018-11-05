@@ -38,7 +38,7 @@ class IdleState:
 
     @staticmethod
     def enter(player, event):
-        player.image = load_image("C:\\GitHub\\2DGP_TermProject\\Resources\\Player\\Idle\\Player_RightIdle.png")
+        player.image = load_image("C:\\GitHub\\2DGP_TermProject\\Resources\\Player\\Idle\\Player_Idle.png")
         if event == RIGHT_DOWN:
             player.velocity += RUN_SPEED_PPS
         elif event == LEFT_DOWN:
@@ -66,7 +66,7 @@ class IdleState:
         if player.dir == 1:
             player.image.clip_draw(int(player.frame) * 98, 0, 98, 155, player.x, player.y)
         else:
-            player.image.clip_draw(int(player.frame) * 98, 0, 98, 155, player.x, player.y)
+            player.image.clip_draw(int(player.frame) * 98, 155, 98, 155, player.x, player.y)
 
 
 class RunState:
