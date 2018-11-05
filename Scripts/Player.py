@@ -115,7 +115,7 @@ next_state_table = {
 class Player:
 
     def __init__(self):
-        self.x, self.y = 1600 // 2, 90
+        self.x, self.y = 1900 // 2, 90
         self.image = load_image("C:\\GitHub\\2DGP_TermProject\\Resources\\Player\\Idle\\Player_RightIdle.png")
 #        self.font = load_font('ENCR10B.TTF', 32)
         self.dir = 1
