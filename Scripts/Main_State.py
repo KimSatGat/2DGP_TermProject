@@ -7,7 +7,7 @@ import Game_FrameWork
 import Game_World
 
 from Player import Player
-#from grass import Grass
+from BackGround import BackGround
 
 
 
@@ -18,8 +18,8 @@ player = None
 def enter():
     global player
     player = Player()
-    #grass = Grass()
-    #Game_World.add_object(grass, 0)
+    background = BackGround()
+    Game_World.add_object(background, 0)
     Game_World.add_object(player, 1)
 
 
