@@ -63,7 +63,7 @@ class IdleState:
     @staticmethod
     def exit(player, event):
         if event == X:
-            player.fire_bullet()
+            player.fire_bullet(50 * player.dir,0)
 
     @staticmethod
     def do(player):
@@ -111,7 +111,7 @@ class RunState:
     @staticmethod
     def exit(player, event):
         if event == X:
-            player.fire_bullet()
+            player.fire_bullet(80 * player.dir , -10)
 
     @staticmethod
     def do(player):
@@ -197,8 +197,8 @@ class Player:
         self.cur_state = IdleState
         self.cur_state.enter(self, None)
 
-    def fire_bullet(self):
-        player_bullet = Player_Bullet(self.x, self.y, self.dir*10)
+    def fire_bullet(self, offset_Position_X,offset_Position_Y):
+        player_bullet = Player_Bullet(self.x + offset_Position_X, self.y + offset_Position_Y, self.dir*10)
         Game_World.add_object(player_bullet, 1)
 
     def add_event(self, event):
