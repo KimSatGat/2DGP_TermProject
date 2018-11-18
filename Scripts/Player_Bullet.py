@@ -18,7 +18,10 @@ class Player_Bullet:
 
 
     def draw(self):
-        self.image.clip_draw(int(self.frame) * 80, 0, 80, 51, self.x, self.y)
+        if self.velocity > 0:
+            self.image.clip_draw(int(self.frame) * 80, 51, 80, 51, self.x, self.y)
+        else:
+            self.image.clip_draw(int(self.frame) * 80, 0, 80, 51, self.x, self.y)
 
     def update(self):
         self.x += self.velocity
