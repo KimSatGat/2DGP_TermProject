@@ -27,5 +27,5 @@ class Player_Bullet:
         self.x += self.velocity
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * Game_FrameWork.frame_time) % 4
 
-        if self.x < 25 or self.x > 1600 - 25:
+        if self.x < 25 or self.x > 1900 - 25:
             Game_World.remove_object(self)

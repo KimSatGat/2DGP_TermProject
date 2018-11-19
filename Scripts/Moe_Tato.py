@@ -41,8 +41,6 @@ class MoeTato:
 
     def fire_ball(self):
         pass
-        #ball = Ball(self.x, self.y, self.dir*3)
-        #Game_World.add_object(ball, 1)
 
     def add_event(self, event):
         self.event_que.insert(0, event)
@@ -54,10 +52,9 @@ class MoeTato:
             self.cur_state.exit(self, event)
             self.cur_state = next_state_table[self.cur_state][event]
             self.cur_state.enter(self, event)
-        print(self.cur_state, self.image)
+
     def draw(self):
         self.cur_state.draw(self)
-#        self.font.draw(self.x - 60, self.y + 50, '(Time: %3.2f)' % get_time(), (255, 255, 0))
 
     def handle_event(self, event):
         if (event.type, event.key) in key_event_table:

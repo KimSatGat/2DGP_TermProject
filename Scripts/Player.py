@@ -6,7 +6,7 @@ from Player_Bullet import Player_Bullet
 
 import Game_World
 
-timer = get_time()
+
 jump_timer = None
 
 
@@ -63,7 +63,7 @@ class IdleState:
     @staticmethod
     def exit(player, event):
         if event == X:
-            player.fire_bullet(50 * player.dir,0)
+            player.fire_bullet(50 * player.dir, 0)
 
     @staticmethod
     def do(player):
@@ -81,12 +81,12 @@ class IdleState:
     def draw(player):
         if player.dir == 1:
             if player.updown == 1:
-                player.image.clip_draw(int(player.frame) * 134, 0, 134, 161, player.x, player.y)
+                player.image.clip_draw(int(player.frame) * 108, 0, 108, 175, player.x, player.y)
             else:
                 player.image.clip_draw(int(player.frame) * 134, 0, 134, 161, player.x, player.y)
         else:
             if player.updown == 1:
-                player.image.clip_draw(int(player.frame) * 134, 0, 134, 161, player.x, player.y)
+                player.image.clip_draw(int(player.frame) * 108, 175, 108, 175, player.x, player.y)
             else:
                 player.image.clip_draw(int(player.frame) * 133, 161, 133, 158, player.x, player.y)
 
@@ -97,7 +97,6 @@ class RunState:
     @staticmethod
     def enter(player, event):
         player.image = load_image("C:\\GitHub\\2DGP_TermProject\\Resources\\Player\\Run\\Player_Run.png")
-
         if event == RIGHT_DOWN:
             player.velocity += RUN_SPEED_PPS
         elif event == LEFT_DOWN:
@@ -111,7 +110,7 @@ class RunState:
     @staticmethod
     def exit(player, event):
         if event == X:
-            player.fire_bullet(80 * player.dir , -10)
+            player.fire_bullet(80 * player.dir, -10)
 
     @staticmethod
     def do(player):
@@ -120,7 +119,7 @@ class RunState:
         else:
             player.frame = (player.frame - (FRAMES_PER_ACTION * ACTION_PER_TIME * ACTION_PER_TIME * Game_FrameWork.frame_time)) % 16
         player.x += player.velocity * Game_FrameWork.frame_time
-        player.x = clamp(25, player.x, 1600 - 25)
+        player.x = clamp(25, player.x, 1900 - 25)
 
     @staticmethod
     def draw(player):
@@ -135,52 +134,57 @@ class JumpState:
     @staticmethod
     def enter(player, event):
         player.image = load_image("C:\\GitHub\\2DGP_TermProject\\Resources\\Player\\Jump\\Player_Jump.png")
-        global timer, jump_timer
-        jump_timer = get_time()
         if event == RIGHT_DOWN:
             player.velocity += RUN_SPEED_PPS
+            player.dir = clamp(-1, player.velocity, 1)
         elif event == LEFT_DOWN:
             player.velocity -= RUN_SPEED_PPS
+            player.dir = clamp(-1, player.velocity, 1)
         elif event == RIGHT_UP:
             player.velocity -= RUN_SPEED_PPS
+            player.dir = clamp(-1, player.velocity, 1)
         elif event == LEFT_UP:
             player.velocity += RUN_SPEED_PPS
-        player.dir = clamp(-1, player.velocity, 1)
+            player.dir = clamp(-1, player.velocity, 1)
 
     @staticmethod
     def exit(player, event):
-        if event == SPACE:
-            player.fire_bullet()
+        if event == X:
+            player.fire_bullet(0, 0)
 
     @staticmethod
     def do(player):
-        global timer, jump_timer
-        player.frame = (player.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * ACTION_PER_TIME * Game_FrameWork.frame_time) % 8
-
-        player.x += player.velocity * Game_FrameWork.frame_time
-        player.x = clamp(25, player.x, 1600 - 25)
-        if get_time() - jump_timer < 1:
-            player.y += RUN_SPEED_PPS * Game_FrameWork.frame_time
-        elif get_time() - jump_timer > 1:
-            player.y -= RUN_SPEED_PPS * Game_FrameWork.frame_time
+        global  jump_timer
+        if not player.isJump:
+            player.isJump = True
+            jump_timer = get_time()
+        if get_time() - jump_timer < 0.5:
+            player.y += RUN_SPEED_PPS * 3 * Game_FrameWork.frame_time
+        elif get_time() - jump_timer > 0.5:
+            player.y -= RUN_SPEED_PPS * 3 * Game_FrameWork.frame_time
             if player.y <= 90:
                 player.y = 90
+                player.isJump = False
                 player.add_event(GROUND)
+
+        player.frame = (player.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * ACTION_PER_TIME * Game_FrameWork.frame_time) % 8
+        player.x += player.velocity * Game_FrameWork.frame_time
+        player.x = clamp(25, player.x, 1600 - 25)
 
 
     @staticmethod
     def draw(player):
         if player.dir == 1:
-            player.image.clip_draw(int(player.frame) * 80, 109, 80, 109, player.x, player.y)
+            player.image.clip_draw(int(player.frame) * 88, 0, 88, 109, player.x, player.y)
         else:
-            player.image.clip_draw(int(player.frame) * 80, 0, 80, 109, player.x, player.y)
+            player.image.clip_draw(int(player.frame) * 88, 109, 80, 109, player.x, player.y)
 
 
 
 next_state_table = {
-    IdleState: {RIGHT_UP: RunState, LEFT_UP: RunState, RIGHT_DOWN: RunState, LEFT_DOWN: RunState, TOP_UP: IdleState, TOP_DOWN: IdleState , SPACE: JumpState, GROUND: IdleState, X: IdleState},
-    RunState: {RIGHT_UP: IdleState, LEFT_UP: IdleState, LEFT_DOWN: IdleState, RIGHT_DOWN: IdleState, TOP_UP: IdleState, TOP_DOWN: IdleState , SPACE: JumpState, GROUND: RunState, X: RunState},
-    JumpState: {RIGHT_UP: JumpState, LEFT_UP: JumpState, LEFT_DOWN: JumpState, RIGHT_DOWN: JumpState, TOP_UP: JumpState, TOP_DOWN: JumpState , SPACE: JumpState, GROUND :RunState, X: JumpState},
+    IdleState: {RIGHT_DOWN: RunState, LEFT_DOWN: RunState, RIGHT_UP: IdleState, LEFT_UP: IdleState, TOP_UP: IdleState, TOP_DOWN: IdleState, SPACE: JumpState, GROUND: IdleState, X: IdleState},
+    RunState: {RIGHT_DOWN: RunState, LEFT_DOWN: RunState, RIGHT_UP: IdleState, LEFT_UP: IdleState, SPACE: JumpState, GROUND: RunState, X: RunState},
+    JumpState: {RIGHT_UP: JumpState, LEFT_UP: JumpState,  LEFT_DOWN: JumpState, RIGHT_DOWN: JumpState, SPACE: JumpState, GROUND : IdleState, X: JumpState},
 }
 
 class Player:
@@ -191,6 +195,7 @@ class Player:
         self.dir = 1
         self.updown = 0
         self.isIdleFrameIncrease = True
+        self.isJump = False
         self.velocity = 0
         self.frame = 0
         self.event_que = []
@@ -208,10 +213,11 @@ class Player:
         self.cur_state.do(self)
         if len(self.event_que) > 0:
             event = self.event_que.pop()
+            if (event in next_state_table[self.cur_state]) == False:
+                return
             self.cur_state.exit(self, event)
             self.cur_state = next_state_table[self.cur_state][event]
             self.cur_state.enter(self, event)
-        print(self.cur_state, self.image)
     def draw(self):
         self.cur_state.draw(self)
 

@@ -13,7 +13,6 @@ from BackGround import BackGround
 
 
 name = "MainState"
-
 player = None
 
 def enter():
@@ -51,7 +50,7 @@ def handle_events():
 def update():
     for game_object in Game_World.all_objects():
         game_object.update()
-    delay(0.01)
+
 
 
 def draw():
