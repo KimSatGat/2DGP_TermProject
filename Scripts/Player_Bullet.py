@@ -20,11 +20,8 @@ class Player_Bullet:
     def draw(self):
         if self.velocity > 0:
             self.image.clip_draw(int(self.frame) * 80, 51, 80, 51, self.x, self.y)
-            draw_rectangle(*self.get_bb(30,30,35,30))
         else:
             self.image.clip_draw(int(self.frame) * 80, 0, 80, 51, self.x, self.y)
-            draw_rectangle(*self.get_bb(40,30,30,30))
-
 
     def update(self):
         self.x += self.velocity
@@ -32,6 +29,3 @@ class Player_Bullet:
 
         if self.x < 25 or self.x > 1900 - 25:
             Game_World.remove_object(self)
-
-    def get_bb(self, offset_left, offset_bottom, offset_right, offset_top):
-        return (self.x - offset_left), (self.y - offset_bottom), (self.x + offset_right), (self.y + offset_top)
