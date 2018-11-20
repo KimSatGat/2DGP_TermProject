@@ -82,13 +82,17 @@ class IdleState:
         if player.dir == 1:
             if player.updown == 1:
                 player.image.clip_draw(int(player.frame) * 108, 0, 108, 175, player.x, player.y)
+                draw_rectangle(*player.get_bb(55, 80, 60, 75))
             else:
                 player.image.clip_draw(int(player.frame) * 134, 0, 134, 161, player.x, player.y)
+                draw_rectangle(*player.get_bb(65, 80, 70, 70))
         else:
             if player.updown == 1:
                 player.image.clip_draw(int(player.frame) * 108, 175, 108, 175, player.x, player.y)
+                draw_rectangle(*player.get_bb(55, 80, 60, 75))
             else:
                 player.image.clip_draw(int(player.frame) * 133, 161, 133, 158, player.x, player.y)
+                draw_rectangle(*player.get_bb(65, 80, 70, 70))
 
 
 
@@ -127,6 +131,7 @@ class RunState:
             player.image.clip_draw(int(player.frame) * 144, 0, 144, 162, player.x, player.y)
         else:
             player.image.clip_draw(int(player.frame) * 144, 162, 144, 162, player.x, player.y)
+        draw_rectangle(*player.get_bb(65, 80, 70, 70))
 
 
 class JumpState:
@@ -178,6 +183,7 @@ class JumpState:
             player.image.clip_draw(int(player.frame) * 88, 0, 88, 109, player.x, player.y)
         else:
             player.image.clip_draw(int(player.frame) * 88, 109, 80, 109, player.x, player.y)
+        draw_rectangle(*player.get_bb(40, 60, 40, 50))
 
 
 
@@ -206,6 +212,9 @@ class Player:
         player_bullet = Player_Bullet(self.x + offset_Position_X, self.y + offset_Position_Y, self.dir*10)
         Game_World.add_object(player_bullet, 1)
 
+    def get_bb(self, offset_left, offset_bottom, offset_right, offset_top):
+        return (self.x - offset_left), (self.y - offset_bottom), (self.x + offset_right), (self.y + offset_top)
+
     def add_event(self, event):
         self.event_que.insert(0, event)
 
@@ -218,6 +227,7 @@ class Player:
             self.cur_state.exit(self, event)
             self.cur_state = next_state_table[self.cur_state][event]
             self.cur_state.enter(self, event)
+
     def draw(self):
         self.cur_state.draw(self)
 
