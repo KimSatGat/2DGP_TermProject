@@ -1,7 +1,5 @@
 import Game_FrameWork
-import random
 from pico2d import *
-from math import *
 from Player_Bullet import Player_Bullet
 
 import Game_World
@@ -23,7 +21,7 @@ ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
 FRAMES_PER_ACTION = 5
 
 # Player Event
-RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP, TOP_UP,TOP_DOWN, GROUND, SPACE, X = range(9)
+RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP, TOP_UP,TOP_DOWN, GROUND_Idle, Ground_Run, SPACE, X = range(10)
 
 key_event_table = {
     (SDL_KEYDOWN, SDLK_RIGHT): RIGHT_DOWN,
@@ -170,11 +168,17 @@ class JumpState:
             if player.y <= 90:
                 player.y = 90
                 player.isJump = False
-                player.add_event(GROUND)
+                if player.velocity != 0:
+                    player.add_event(Ground_Run)
+                else:
+                    player.add_event(GROUND_Idle)
+
 
         player.frame = (player.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * ACTION_PER_TIME * Game_FrameWork.frame_time) % 8
         player.x += player.velocity * Game_FrameWork.frame_time
         player.x = clamp(25, player.x, 1600 - 25)
+
+
 
 
     @staticmethod
@@ -188,9 +192,9 @@ class JumpState:
 
 
 next_state_table = {
-    IdleState: {RIGHT_DOWN: RunState, LEFT_DOWN: RunState, RIGHT_UP: IdleState, LEFT_UP: IdleState, TOP_UP: IdleState, TOP_DOWN: IdleState, SPACE: JumpState, GROUND: IdleState, X: IdleState},
-    RunState: {RIGHT_DOWN: RunState, LEFT_DOWN: RunState, RIGHT_UP: IdleState, LEFT_UP: IdleState, SPACE: JumpState, GROUND: RunState, X: RunState},
-    JumpState: {RIGHT_UP: JumpState, LEFT_UP: JumpState,  LEFT_DOWN: JumpState, RIGHT_DOWN: JumpState, SPACE: JumpState, GROUND : IdleState, X: JumpState},
+    IdleState: {RIGHT_DOWN: RunState, LEFT_DOWN: RunState, RIGHT_UP: IdleState, LEFT_UP: IdleState, TOP_UP: IdleState, TOP_DOWN: IdleState, SPACE: JumpState, X: IdleState},
+    RunState: {RIGHT_DOWN: RunState, LEFT_DOWN: RunState, RIGHT_UP: IdleState, LEFT_UP: IdleState, SPACE: JumpState, X: RunState},
+    JumpState: {RIGHT_UP: JumpState, LEFT_UP: JumpState,  LEFT_DOWN: JumpState, RIGHT_DOWN: JumpState, SPACE: JumpState, GROUND_Idle : IdleState, Ground_Run : RunState, X: JumpState},
 }
 
 class Player:
@@ -227,6 +231,7 @@ class Player:
             self.cur_state.exit(self, event)
             self.cur_state = next_state_table[self.cur_state][event]
             self.cur_state.enter(self, event)
+
     def draw(self):
         self.cur_state.draw(self)
 
