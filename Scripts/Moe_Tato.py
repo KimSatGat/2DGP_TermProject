@@ -22,17 +22,17 @@ class IdleState:
 
     @staticmethod
     def do(MoeTato):
-        MoeTato.frame = (MoeTato.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * Game_FrameWork.frame_time) % 9
+        MoeTato.frame = (MoeTato.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * Game_FrameWork.frame_time) % 7
 
     @staticmethod
     def draw(MoeTato):
-        MoeTato.image.clip_draw(int(MoeTato.frame) * 463, 0, 463, 383, MoeTato.x, MoeTato.y)
+        MoeTato.image.clip_draw(int(MoeTato.frame) * 530, 0, 530, 514, MoeTato.x, MoeTato.y)
 
 class MoeTato:
 
     def __init__(self):
-        self.x, self.y = 1600, 200
-        self.image = load_image("C:\\GitHub\\2DGP_TermProject\\Resources\\MoeTato\\Idle\\Idle-Sheet.png")
+        self.x, self.y = 1600, 250
+        self.image = load_image("C:\\GitHub\\2DGP_TermProject\\Resources\\MoeTato\\Idle.png")
         self.velocity = 0
         self.frame = 0
         self.event_que = []
