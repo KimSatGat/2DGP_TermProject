@@ -55,8 +55,18 @@ class MoeTato:
 
     def draw(self):
         self.cur_state.draw(self)
+        draw_rectangle(*self.get_bb_body1())
+        draw_rectangle(*self.get_bb_body2())
+        draw_rectangle(*self.get_bb_hand())
 
     def handle_event(self, event):
         if (event.type, event.key) in key_event_table:
             key_event = key_event_table[(event.type, event.key)]
             self.add_event(key_event)
+
+    def get_bb_body1(self):
+        return self.x - 130, self.y - 250, self.x + 50, self.y - 50
+    def get_bb_body2(self):
+        return self.x - 90, self.y - 50, self.x + 50, self.y + 120
+    def get_bb_hand(self):
+        return self.x - 230, self.y - 150, self.x - 120, self.y - 100
