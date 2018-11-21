@@ -215,6 +215,7 @@ class Player:
     def fire_bullet(self, offset_Position_X,offset_Position_Y):
         player_bullet = Player_Bullet(self.x + offset_Position_X, self.y + offset_Position_Y, self.dir*10)
         Game_World.add_object(player_bullet, 1)
+        Game_World.add_object(player_bullet, 2)
 
     def get_bb(self, offset_left, offset_bottom, offset_right, offset_top):
         return (self.x - offset_left), (self.y - offset_bottom), (self.x + offset_right), (self.y + offset_top)

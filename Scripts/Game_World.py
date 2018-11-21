@@ -1,7 +1,8 @@
 
 # layer 0: Background Objects
 # layer 1: Foreground Objects
-objects = [[],[]]
+# layer 2: Player Bullets
+objects = [[],[],[]]
 
 
 def add_object(o, layer):
@@ -9,7 +10,7 @@ def add_object(o, layer):
 
 
 def remove_object(o):
-    for i in range(len(objects)):
+    for i in range(0,2):
         if o in objects[i]:
             objects[i].remove(o)
             del o
@@ -22,7 +23,12 @@ def clear():
 
 
 def all_objects():
-    for i in range(len(objects)):
+    for i in range(2):
         for o in objects[i]:
             yield o
+
+def all_bullets():
+    for i in objects[2]:
+        yield i
+
 
