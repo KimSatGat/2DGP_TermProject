@@ -34,6 +34,6 @@ class Moe_Tato_Bullet:
         return (self.x - 50), (self.y - 50), (self.x + 50), (self.y + 50)
 
     def explosion(self):
-        self.image = load_image('C:\\GitHub\\2DGP_TermProject\Resources\\MoeTato\\Projectile1-Pop.png')
+        self.image = load_image('C:\\GitHub\\2DGP_TermProject\Resources\\MoeTato\\Bullet_Explosion.png')
         self.isExplosion = True
         self.velocity = 0

@@ -48,14 +48,18 @@ def update():
     for game_object in Game_World.all_objects():
         game_object.update()
 
-    #미사일 충돌 체크
-    for bullets in Game_World.all_bullets():
+    #player_bullet 충돌 체크
+    for bullets in Game_World.all_player_bullets():
         if bullets.velocity > 0:
             if collide(bullets.get_bb_dir_right(), moetato.get_bb_hand()) or  collide(bullets.get_bb_dir_right(), moetato.get_bb_body1()) or  collide(bullets.get_bb_dir_right(), moetato.get_bb_body2()):
                 bullets.explosion()
         else:
             if collide(bullets.get_bb_dir_left(), moetato.get_bb_hand()) or  collide(bullets.get_bb_dir_left(), moetato.get_bb_body1()) or  collide(bullets.get_bb_dir_left(), moetato.get_bb_body2()):
                 bullets.explosion()
+
+    #moetato bullet 충돌 체크
+    for bullets in Game_World.all_moetato_bullets():
+        if collide(bullets.get_bb(), player.get_bb(65, 80, 70, 70)):
 
 def draw():
     clear_canvas()
