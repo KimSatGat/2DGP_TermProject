@@ -6,12 +6,10 @@ from pico2d import *
 import Game_FrameWork
 import Game_World
 
-from Player_Bullet import Player_Bullet
+
 from Player import Player
 from Moe_Tato import MoeTato
 from BackGround import BackGround
-
-
 
 name = "MainState"
 player = None
@@ -26,17 +24,14 @@ def enter():
     Game_World.add_object(player, 1)
     Game_World.add_object(moetato, 1)
 
-
 def exit():
     Game_World.clear()
 
 def pause():
     pass
 
-
 def resume():
     pass
-
 
 def handle_events():
     events = get_events()
@@ -47,7 +42,6 @@ def handle_events():
                 Game_FrameWork.quit()
         else:
             player.handle_event(event)
-
 
 def update():
     global  player, moetato
@@ -62,8 +56,6 @@ def update():
         else:
             if collide(bullets.get_bb_dir_left(), moetato.get_bb_hand()) or  collide(bullets.get_bb_dir_left(), moetato.get_bb_body1()) or  collide(bullets.get_bb_dir_left(), moetato.get_bb_body2()):
                 bullets.explosion()
-
-
 
 def draw():
     clear_canvas()
@@ -81,7 +73,3 @@ def collide(a, b):
     if bottom_a > top_b : return False
 
     return True
-
-
-
-

@@ -1,10 +1,10 @@
 import Game_FrameWork
 import random
 from pico2d import *
+from Moe_Tato_Bullet import Moe_Tato_Bullet
 from math import *
 
 import Game_World
-
 
 TIME_PER_ACTION = 0.5
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
@@ -28,6 +28,59 @@ class IdleState:
     def draw(MoeTato):
         MoeTato.image.clip_draw(int(MoeTato.frame) * 530, 0, 530, 514, MoeTato.x, MoeTato.y)
 
+class AttackState:
+
+    @staticmethod
+    def enter(MoeTato, event):
+        MoeTato.image = load_image("C:\\GitHub\\2DGP_TermProject\\Resources\\MoeTato\\Attack\\Attack-" + "1" + ".png")
+
+    @staticmethod
+    def exit(MoeTato, event):
+        pass
+
+    @staticmethod
+    def do(MoeTato):
+        MoeTato.frame = (MoeTato.frame + (FRAMES_PER_ACTION * 2) * ACTION_PER_TIME * Game_FrameWork.frame_time) % 17
+        MoeTato.image = load_image("C:\\GitHub\\2DGP_TermProject\\Resources\\MoeTato\\Attack\\Attack-" + str(int(MoeTato.frame)) + ".png")
+        if int(MoeTato.frame) == 16 and MoeTato.isFire:
+            MoeTato.fire_bullet(-200, -180)
+            MoeTato.isFire = False
+        if int(MoeTato.frame) < 5:
+            MoeTato.isFire = True
+
+
+
+
+    @staticmethod
+    def draw(MoeTato):
+        MoeTato.image.draw(MoeTato.x, MoeTato.y)
+
+class DeathState:
+
+    @staticmethod
+    def enter(MoeTato, event):
+        MoeTato.image = load_image("C:\\GitHub\\2DGP_TermProject\\Resources\\MoeTato\\Death.png")
+        MoeTato.isDeathFrameIncrease = True
+
+    @staticmethod
+    def exit(MoeTato, event):
+        pass
+
+    @staticmethod
+    def do(MoeTato):
+        if MoeTato.isDeathFrameIncrease:
+            MoeTato.frame  += (FRAMES_PER_ACTION * ACTION_PER_TIME * Game_FrameWork.frame_time * 3) % 9
+            if MoeTato.frame >= 8:
+                MoeTato.isDeathFrameIncrease = False
+        else:
+            MoeTato.frame -= (FRAMES_PER_ACTION * ACTION_PER_TIME * Game_FrameWork.frame_time * 3) % 9
+            if MoeTato.frame <= 1:
+                MoeTato.isDeathFrameIncrease = True
+
+    @staticmethod
+    def draw(MoeTato):
+        MoeTato.image.clip_draw(int(MoeTato.frame) * 307, 0, 307, 438, MoeTato.x, MoeTato.y)
+
 class MoeTato:
 
     def __init__(self):
@@ -35,12 +88,16 @@ class MoeTato:
         self.image = load_image("C:\\GitHub\\2DGP_TermProject\\Resources\\MoeTato\\Idle.png")
         self.velocity = 0
         self.frame = 0
+        self.isFire = True
+        self.isDeathFrameIncrease = False
         self.event_que = []
-        self.cur_state = IdleState
+        self.cur_state = AttackState
         self.cur_state.enter(self, None)
 
-    def fire_ball(self):
-        pass
+
+    def fire_bullet(self, offset_Position_X, offset_Position_Y):
+        moetato_bullet = Moe_Tato_Bullet(self.x + offset_Position_X, self.y + offset_Position_Y, 1)
+        Game_World.add_object(moetato_bullet, 1)
 
     def add_event(self, event):
         self.event_que.insert(0, event)

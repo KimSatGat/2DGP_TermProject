@@ -10,7 +10,7 @@ def add_object(o, layer):
 
 
 def remove_object(o):
-    for i in range(0,2):
+    for i in range(len(objects)):
         if o in objects[i]:
             objects[i].remove(o)
             del o
@@ -21,14 +21,12 @@ def clear():
         del o
     objects.clear()
 
-
 def all_objects():
-    for i in range(2):
+    for i in range(len(objects)):
         for o in objects[i]:
             yield o
 
 def all_bullets():
-    for i in objects[2]:
-        yield i
-
+    for o in objects[2]:
+        yield o
 

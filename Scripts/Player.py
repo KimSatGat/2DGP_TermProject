@@ -4,9 +4,7 @@ from Player_Bullet import Player_Bullet
 
 import Game_World
 
-
 jump_timer = None
-
 
 # Player Run Speed
 PIXEL_PER_METER = (10.0 / 0.3) # 10 pixel 30cm
@@ -42,6 +40,7 @@ class IdleState:
     @staticmethod
     def enter(player, event):
         player.image = load_image("C:\\GitHub\\2DGP_TermProject\\Resources\\Player\\Idle\\Player_Idle.png")
+        player.isRun = False
         player.frame = 0
         if event == RIGHT_DOWN:
             player.velocity += RUN_SPEED_PPS
@@ -99,6 +98,7 @@ class RunState:
     @staticmethod
     def enter(player, event):
         player.image = load_image("C:\\GitHub\\2DGP_TermProject\\Resources\\Player\\Run\\Player_Run.png")
+        player.isRun = True
         if event == RIGHT_DOWN:
             player.velocity += RUN_SPEED_PPS
         elif event == LEFT_DOWN:
@@ -116,19 +116,21 @@ class RunState:
 
     @staticmethod
     def do(player):
-        if player.dir == 1:
-            player.frame = (player.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * ACTION_PER_TIME * Game_FrameWork.frame_time) % 16
-        else:
-            player.frame = (player.frame - (FRAMES_PER_ACTION * ACTION_PER_TIME * ACTION_PER_TIME * Game_FrameWork.frame_time)) % 16
-        player.x += player.velocity * Game_FrameWork.frame_time
+        if player.isRun:
+            if player.dir == 1:
+                player.frame = (player.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * ACTION_PER_TIME * Game_FrameWork.frame_time) % 16
+            else:
+                player.frame = (player.frame - (FRAMES_PER_ACTION * ACTION_PER_TIME * ACTION_PER_TIME * Game_FrameWork.frame_time)) % 16
+            player.x += player.velocity * Game_FrameWork.frame_time
         player.x = clamp(25, player.x, 1900 - 25)
 
     @staticmethod
     def draw(player):
-        if player.dir == 1:
-            player.image.clip_draw(int(player.frame) * 144, 0, 144, 162, player.x, player.y)
-        else:
-            player.image.clip_draw(int(player.frame) * 144, 162, 144, 162, player.x, player.y)
+        if player.isRun:
+            if player.dir == 1:
+                player.image.clip_draw(int(player.frame) * 144, 0, 144, 162, player.x, player.y)
+            else:
+                player.image.clip_draw(int(player.frame) * 144, 162, 144, 162, player.x, player.y)
         draw_rectangle(*player.get_bb(65, 80, 70, 70))
 
 
@@ -173,13 +175,9 @@ class JumpState:
                 else:
                     player.add_event(GROUND_Idle)
 
-
         player.frame = (player.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * ACTION_PER_TIME * Game_FrameWork.frame_time) % 8
         player.x += player.velocity * Game_FrameWork.frame_time
         player.x = clamp(25, player.x, 1600 - 25)
-
-
-
 
     @staticmethod
     def draw(player):
@@ -189,12 +187,10 @@ class JumpState:
             player.image.clip_draw(int(player.frame) * 88, 109, 80, 109, player.x, player.y)
         draw_rectangle(*player.get_bb(40, 60, 40, 50))
 
-
-
 next_state_table = {
     IdleState: {RIGHT_DOWN: RunState, LEFT_DOWN: RunState, RIGHT_UP: IdleState, LEFT_UP: IdleState, TOP_UP: IdleState, TOP_DOWN: IdleState, SPACE: JumpState, X: IdleState},
     RunState: {RIGHT_DOWN: RunState, LEFT_DOWN: RunState, RIGHT_UP: IdleState, LEFT_UP: IdleState, SPACE: JumpState, X: RunState},
-    JumpState: {RIGHT_UP: JumpState, LEFT_UP: JumpState,  LEFT_DOWN: JumpState, RIGHT_DOWN: JumpState, SPACE: JumpState, GROUND_Idle : IdleState, Ground_Run : RunState, X: JumpState},
+    JumpState: {RIGHT_DOWN: JumpState, LEFT_DOWN: JumpState, RIGHT_UP: JumpState, LEFT_UP: JumpState,   SPACE: JumpState, GROUND_Idle : IdleState, Ground_Run : RunState, X: JumpState},
 }
 
 class Player:
@@ -206,6 +202,7 @@ class Player:
         self.updown = 0
         self.isIdleFrameIncrease = True
         self.isJump = False
+        self.isRun = False
         self.velocity = 0
         self.frame = 0
         self.event_que = []
@@ -214,7 +211,6 @@ class Player:
 
     def fire_bullet(self, offset_Position_X,offset_Position_Y):
         player_bullet = Player_Bullet(self.x + offset_Position_X, self.y + offset_Position_Y, self.dir*10)
-        Game_World.add_object(player_bullet, 1)
         Game_World.add_object(player_bullet, 2)
 
     def get_bb(self, offset_left, offset_bottom, offset_right, offset_top):
@@ -229,6 +225,7 @@ class Player:
             event = self.event_que.pop()
             if (event in next_state_table[self.cur_state]) == False:
                 return
+            #if(event in next_state_table[self.cur_state]) ==
             self.cur_state.exit(self, event)
             self.cur_state = next_state_table[self.cur_state][event]
             self.cur_state.enter(self, event)

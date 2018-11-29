@@ -11,11 +11,12 @@ FRAMES_PER_ACTION = 8
 class Player_Bullet:
     image = None
 
-    def __init__(self, x = 400, y = 300, velocity = 1):
+    def __init__(self,x,y,velocity):
         if Player_Bullet.image == None:
             Player_Bullet.image = load_image('C:\\GitHub\\2DGP_TermProject\\Resources\\Player\\Bullet\\Player_Bullet.png')
         self.x, self.y, self.velocity = x, y, velocity
         self.frame = 0
+        self.damage = 10
         self.ExplosionTime = None
         self.isExplosion = False
 
