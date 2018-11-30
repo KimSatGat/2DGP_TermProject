@@ -32,12 +32,14 @@ class Player_Bullet:
 
     def update(self):
         self.x += self.velocity
+
         if self.isExplosion:
             if self.ExplosionTime == None:
                 self.ExplosionTime = get_time()
             if get_time() - self.ExplosionTime >= 0.2:
                 Game_World.remove_object(self)
             self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * Game_FrameWork.frame_time) % 7
+
         else:
             self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * Game_FrameWork.frame_time) % 4
 

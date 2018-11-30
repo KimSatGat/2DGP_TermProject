@@ -60,6 +60,7 @@ def update():
     #moetato bullet 충돌 체크
     for bullets in Game_World.all_moetato_bullets():
         if collide(bullets.get_bb(), player.get_bb(65, 80, 70, 70)):
+            bullets.explosion()
 
 def draw():
     clear_canvas()

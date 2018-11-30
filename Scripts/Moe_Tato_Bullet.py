@@ -21,12 +21,24 @@ class Moe_Tato_Bullet:
         self.isExplosion = False
 
     def draw(self):
-        self.image.clip_draw(int(self.frame) * 131, 0, 131, 139, self.x, self.y)
-        draw_rectangle(*self.get_bb())
+        if self.velocity == 0:
+            self.image.clip_draw(int(self.frame) * 278, 0, 278, 253, self.x, self.y)
+        else:
+            self.image.clip_draw(int(self.frame) * 131, 0, 131, 139, self.x, self.y)
+            draw_rectangle(*self.get_bb())
 
     def update(self):
         self.x -= self.velocity
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * Game_FrameWork.frame_time) % 8
+
+        if self.isExplosion:
+            if self.ExplosionTime == None:
+                self.ExplosionTime = get_time()
+            if get_time() - self.ExplosionTime >= 0.2:
+                Game_World.remove_object(self)
+            self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * Game_FrameWork.frame_time) % 8
+
+
         if self.x > 1900 - 25:
             Game_World.remove_object(self)
 
