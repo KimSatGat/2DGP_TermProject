@@ -5,6 +5,8 @@ from Player_Bullet import Player_Bullet
 import Game_World
 
 jump_timer = None
+hit_timer = None
+invincibility_timer = None
 
 # Player Run Speed
 PIXEL_PER_METER = (10.0 / 0.3) # 10 pixel 30cm
@@ -19,7 +21,7 @@ ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
 FRAMES_PER_ACTION = 5
 
 # Player Event
-RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP, TOP_UP,TOP_DOWN, GROUND_Idle, Ground_Run, SPACE, X = range(10)
+RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP, TOP_UP,TOP_DOWN, GROUND_Idle, Ground_Run, SPACE, X, HIT = range(11)
 
 key_event_table = {
     (SDL_KEYDOWN, SDLK_RIGHT): RIGHT_DOWN,
@@ -39,6 +41,9 @@ class IdleState:
 
     @staticmethod
     def enter(player, event):
+        global invincibility_timer
+        if player.isHit:
+            invincibility_timer = get_time()
         player.image = load_image("C:\\GitHub\\2DGP_TermProject\\Resources\\Player\\Idle\\Player_Idle.png")
         player.isRun = False
         player.frame = 0
@@ -64,14 +69,21 @@ class IdleState:
 
     @staticmethod
     def do(player):
-        if player.isIdleFrameIncrease:
+        global invincibility_timer
+        if invincibility_timer == None:
+            player.isHit = False
+        elif get_time() - invincibility_timer > 1:
+            player.isHit = False
+
+
+        if player.FrameIncrease:
             player.frame += (FRAMES_PER_ACTION * ACTION_PER_TIME * Game_FrameWork.frame_time) % 5
             if player.frame >= 4:
-                player.isIdleFrameIncrease = False
+                player.FrameIncrease = False
         else:
             player.frame -= (FRAMES_PER_ACTION * ACTION_PER_TIME * Game_FrameWork.frame_time) % 5
             if player.frame <= 0:
-                player.isIdleFrameIncrease = True
+                player.FrameIncrease = True
 
 
     @staticmethod
@@ -82,21 +94,22 @@ class IdleState:
                 draw_rectangle(*player.get_bb(55, 80, 60, 75))
             else:
                 player.image.clip_draw(int(player.frame) * 134, 0, 134, 161, player.x, player.y)
-                draw_rectangle(*player.get_bb(65, 80, 70, 70))
+                draw_rectangle(*player.get_bb(55, 80, 60, 75))
         else:
             if player.updown == 1:
                 player.image.clip_draw(int(player.frame) * 108, 175, 108, 175, player.x, player.y)
                 draw_rectangle(*player.get_bb(55, 80, 60, 75))
             else:
                 player.image.clip_draw(int(player.frame) * 133, 161, 133, 158, player.x, player.y)
-                draw_rectangle(*player.get_bb(65, 80, 70, 70))
-
-
+                draw_rectangle(*player.get_bb(55, 80, 60, 75))
 
 class RunState:
 
     @staticmethod
     def enter(player, event):
+        global invincibility_timer
+        if player.isHit:
+            invincibility_timer = get_time()
         player.image = load_image("C:\\GitHub\\2DGP_TermProject\\Resources\\Player\\Run\\Player_Run.png")
         player.isRun = True
         if event == RIGHT_DOWN:
@@ -116,6 +129,13 @@ class RunState:
 
     @staticmethod
     def do(player):
+        global invincibility_timer
+        if invincibility_timer == None:
+            player.isHit = False
+        elif get_time() - invincibility_timer > 1:
+            player.isHit = False
+
+
         if player.isRun:
             if player.dir == 1:
                 player.frame = (player.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * ACTION_PER_TIME * Game_FrameWork.frame_time) % 16
@@ -133,11 +153,13 @@ class RunState:
                 player.image.clip_draw(int(player.frame) * 144, 162, 144, 162, player.x, player.y)
         draw_rectangle(*player.get_bb(65, 80, 70, 70))
 
-
 class JumpState:
 
     @staticmethod
     def enter(player, event):
+        global invincibility_timer
+        if player.isHit:
+            invincibility_timer = get_time()
         player.image = load_image("C:\\GitHub\\2DGP_TermProject\\Resources\\Player\\Jump\\Player_Jump.png")
         if event == RIGHT_DOWN:
             player.velocity += RUN_SPEED_PPS
@@ -159,14 +181,20 @@ class JumpState:
 
     @staticmethod
     def do(player):
+        global  invincibility_timer
         global  jump_timer
+        if invincibility_timer == None:
+            player.isHit = False
+        elif get_time() - invincibility_timer > 2:
+            player.isHit = False
+
         if not player.isJump:
             player.isJump = True
             jump_timer = get_time()
-        if get_time() - jump_timer < 0.5:
-            player.y += RUN_SPEED_PPS * 3 * Game_FrameWork.frame_time
-        elif get_time() - jump_timer > 0.5:
-            player.y -= RUN_SPEED_PPS * 3 * Game_FrameWork.frame_time
+        if get_time() - jump_timer < 0.3:
+            player.y += RUN_SPEED_PPS * 5 * Game_FrameWork.frame_time
+        elif get_time() - jump_timer  > 0.3:
+            player.y -= RUN_SPEED_PPS * 5 * Game_FrameWork.frame_time
             if player.y <= 90:
                 player.y = 90
                 player.isJump = False
@@ -187,10 +215,39 @@ class JumpState:
             player.image.clip_draw(int(player.frame) * 88, 109, 80, 109, player.x, player.y)
         draw_rectangle(*player.get_bb(40, 60, 40, 50))
 
+class HitState:
+
+    @staticmethod
+    def enter(player, event):
+        global hit_timer
+        player.image = load_image("C:\\GitHub\\2DGP_TermProject\\Resources\\Player\\Hit\\Player_Hit.png")
+        player.isHit = True
+        hit_timer = get_time()
+        player.frame = 0
+
+    @staticmethod
+    def exit(player, event):
+        pass
+
+    @staticmethod
+    def do(player):
+        if get_time() - hit_timer > 0.5:
+            player.add_event(GROUND_Idle)
+        player.frame = (player.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * Game_FrameWork.frame_time) % 6
+
+    @staticmethod
+    def draw(player):
+        if player.dir == 1:
+            player.image.clip_draw(int(player.frame) * 125, 0, 125, 221, player.x, player.y)
+        else:
+            player.image.clip_draw(int(player.frame) * 125, 221, 125, 221, player.x, player.y)
+
+
 next_state_table = {
-    IdleState: {RIGHT_DOWN: RunState, LEFT_DOWN: RunState, RIGHT_UP: IdleState, LEFT_UP: IdleState, TOP_UP: IdleState, TOP_DOWN: IdleState, SPACE: JumpState, X: IdleState},
-    RunState: {RIGHT_DOWN: RunState, LEFT_DOWN: RunState, RIGHT_UP: IdleState, LEFT_UP: IdleState, SPACE: JumpState, X: RunState},
-    JumpState: {RIGHT_DOWN: JumpState, LEFT_DOWN: JumpState, RIGHT_UP: JumpState, LEFT_UP: JumpState,   SPACE: JumpState, GROUND_Idle : IdleState, Ground_Run : RunState, X: JumpState},
+    IdleState: {RIGHT_DOWN: RunState, LEFT_DOWN: RunState, RIGHT_UP: IdleState, LEFT_UP: IdleState, TOP_UP: IdleState, TOP_DOWN: IdleState, SPACE: JumpState, X: IdleState, HIT: HitState},
+    RunState: {RIGHT_DOWN: RunState, LEFT_DOWN: RunState, RIGHT_UP: IdleState, LEFT_UP: IdleState, SPACE: JumpState, X: RunState, HIT: HitState},
+    JumpState: {RIGHT_DOWN: JumpState, LEFT_DOWN: JumpState, RIGHT_UP: JumpState, LEFT_UP: JumpState, GROUND_Idle : IdleState, Ground_Run : RunState, X: JumpState, HIT: HitState},
+    HitState: {GROUND_Idle: IdleState}
 }
 
 class Player:
@@ -200,9 +257,10 @@ class Player:
         self.image = load_image("C:\\GitHub\\2DGP_TermProject\\Resources\\Player\\Idle\\Player_Idle.png")
         self.dir = 1
         self.updown = 0
-        self.isIdleFrameIncrease = True
+        self.FrameIncrease = True
         self.isJump = False
         self.isRun = False
+        self.isHit = False
         self.velocity = 0
         self.frame = 0
         self.event_que = []
@@ -211,7 +269,7 @@ class Player:
 
     def fire_bullet(self, offset_Position_X,offset_Position_Y):
         player_bullet = Player_Bullet(self.x + offset_Position_X, self.y + offset_Position_Y, self.dir*10)
-        Game_World.add_object(player_bullet, 2)
+        Game_World.add_object(player_bullet, 1)
 
     def get_bb(self, offset_left, offset_bottom, offset_right, offset_top):
         return (self.x - offset_left), (self.y - offset_bottom), (self.x + offset_right), (self.y + offset_top)
@@ -225,7 +283,6 @@ class Player:
             event = self.event_que.pop()
             if (event in next_state_table[self.cur_state]) == False:
                 return
-            #if(event in next_state_table[self.cur_state]) ==
             self.cur_state.exit(self, event)
             self.cur_state = next_state_table[self.cur_state][event]
             self.cur_state.enter(self, event)
@@ -237,3 +294,6 @@ class Player:
         if (event.type, event.key) in key_event_table:
             key_event = key_event_table[(event.type, event.key)]
             self.add_event(key_event)
+
+    def Hit(self):
+        self.add_event(HIT)

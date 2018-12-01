@@ -43,7 +43,7 @@ class Moe_Tato_Bullet:
             Game_World.remove_object(self)
 
     def get_bb(self):
-        return (self.x - 50), (self.y - 50), (self.x + 50), (self.y + 50)
+        return (self.x - 45), (self.y - 50), (self.x + 50), (self.y + 50)
 
     def explosion(self):
         self.image = load_image('C:\\GitHub\\2DGP_TermProject\Resources\\MoeTato\\Bullet_Explosion.png')

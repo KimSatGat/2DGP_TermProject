@@ -96,8 +96,8 @@ class MoeTato:
 
 
     def fire_bullet(self, offset_Position_X, offset_Position_Y):
-        moetato_bullet = Moe_Tato_Bullet(self.x + offset_Position_X, self.y + offset_Position_Y, 1)
-        Game_World.add_object(moetato_bullet, 3)
+        moetato_bullet = Moe_Tato_Bullet(self.x + offset_Position_X, self.y + offset_Position_Y, 10)
+        Game_World.add_object(moetato_bullet, 1)
 
     def add_event(self, event):
         self.event_que.insert(0, event)

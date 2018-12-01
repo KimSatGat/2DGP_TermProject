@@ -3,11 +3,10 @@
 # layer 1: Foreground Objects
 # layer 2: Player Bullets
 # layer 3: MoeTato Bullets
-objects = [[],[],[],[]]
+objects = [[],[]]
 
 def add_object(o, layer):
     objects[layer].append(o)
-
 def remove_object(o):
     for i in range(len(objects)):
         if o in objects[i]:

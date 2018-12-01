@@ -6,9 +6,10 @@ from pico2d import *
 import Game_FrameWork
 import Game_World
 
-
 from Player import Player
+from Player_Bullet import Player_Bullet
 from Moe_Tato import MoeTato
+from Moe_Tato_Bullet import Moe_Tato_Bullet
 from BackGround import BackGround
 
 name = "MainState"
@@ -45,22 +46,23 @@ def handle_events():
 
 def update():
     global  player, moetato
+
     for game_object in Game_World.all_objects():
+        if isinstance(game_object, Player_Bullet):
+            if game_object.velocity > 0:
+                if collide(game_object.get_bb_dir_right(), moetato.get_bb_hand()) or collide(game_object.get_bb_dir_right(),moetato.get_bb_body1()) or collide(game_object.get_bb_dir_right(), moetato.get_bb_body2()):
+                    game_object.explosion()
+            else:
+                if collide(game_object.get_bb_dir_left(), moetato.get_bb_hand()) or collide(game_object.get_bb_dir_left(),moetato.get_bb_body1()) or collide(game_object.get_bb_dir_left(), moetato.get_bb_body2()):
+                    game_object.explosion()
+        if isinstance(game_object, Moe_Tato_Bullet):
+            if not player.isHit and collide(game_object.get_bb(), player.get_bb(55, 80, 60, 75)):
+                game_object.explosion()
+                player.Hit()
         game_object.update()
 
-    #player_bullet 충돌 체크
-    for bullets in Game_World.all_player_bullets():
-        if bullets.velocity > 0:
-            if collide(bullets.get_bb_dir_right(), moetato.get_bb_hand()) or  collide(bullets.get_bb_dir_right(), moetato.get_bb_body1()) or  collide(bullets.get_bb_dir_right(), moetato.get_bb_body2()):
-                bullets.explosion()
-        else:
-            if collide(bullets.get_bb_dir_left(), moetato.get_bb_hand()) or  collide(bullets.get_bb_dir_left(), moetato.get_bb_body1()) or  collide(bullets.get_bb_dir_left(), moetato.get_bb_body2()):
-                bullets.explosion()
 
-    #moetato bullet 충돌 체크
-    for bullets in Game_World.all_moetato_bullets():
-        if collide(bullets.get_bb(), player.get_bb(65, 80, 70, 70)):
-            bullets.explosion()
+
 
 def draw():
     clear_canvas()
