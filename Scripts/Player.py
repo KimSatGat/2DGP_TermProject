@@ -248,7 +248,6 @@ class Player:
         self.x, self.y = 1900 // 2, 90
         self.image = load_image("C:\\GitHub\\2DGP_TermProject\\Resources\\Player\\Idle\\Player_Idle.png")
         self.dir = 1
-        self.updown = 0
         self.FrameIncrease = True
         self.isJump = False
         self.isRun = False

@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="77dffdb0-224b-4d44-9373-34eda8afd3f0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/Main_State.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Main_State.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/Moe_Tato.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Moe_Tato.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Scripts/Player.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Player.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/Player_Bullet.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Player_Bullet.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -67,10 +63,10 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Scripts/Moe_Tato.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="99">
+            <state relative-caret-position="783">
               <caret line="82" lean-forward="true" selection-start-line="82" selection-end-line="82" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
@@ -79,14 +75,14 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Scripts/Player.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="570">
-              <caret line="223" column="35" lean-forward="true" selection-start-line="223" selection-start-column="35" selection-end-line="223" selection-end-column="35" />
+            <state relative-caret-position="181">
+              <caret line="272" column="31" lean-forward="true" selection-start-line="272" selection-start-column="31" selection-end-line="272" selection-end-column="31" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
-                <marker date="1543735095826" expanded="true" signature="7357:7376" ph="..." />
+                <marker date="1543735288972" expanded="true" signature="7357:7376" ph="..." />
               </folding>
             </state>
           </provider>
@@ -172,6 +168,8 @@
       <find>idlestate</find>
       <find>hit_timer</find>
       <find>isHit</find>
+      <find>up</find>
+      <find>updown</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -367,13 +365,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Scripts/Player_Bullet.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="25" column="52" lean-forward="true" selection-start-line="25" selection-start-column="52" selection-end-line="25" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Scripts/MyGame.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="57">
@@ -394,23 +385,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Scripts/Player.py">
+    <entry file="file://$PROJECT_DIR$/Scripts/Moe_Tato.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="223" column="35" lean-forward="true" selection-start-line="223" selection-start-column="35" selection-end-line="223" selection-end-column="35" />
+        <state relative-caret-position="783">
+          <caret line="82" lean-forward="true" selection-start-line="82" selection-end-line="82" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
-            <marker date="1543735095826" expanded="true" signature="7357:7376" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Scripts/Moe_Tato.py">
+    <entry file="file://$PROJECT_DIR$/Scripts/Player_Bullet.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="99">
-          <caret line="82" lean-forward="true" selection-start-line="82" selection-end-line="82" />
+        <state relative-caret-position="308">
+          <caret line="25" column="52" lean-forward="true" selection-start-line="25" selection-start-column="52" selection-end-line="25" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Scripts/Player.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="181">
+          <caret line="272" column="31" lean-forward="true" selection-start-line="272" selection-start-column="31" selection-end-line="272" selection-end-column="31" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
+            <marker date="1543735288972" expanded="true" signature="7357:7376" ph="..." />
           </folding>
         </state>
       </provider>
