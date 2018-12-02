@@ -48,13 +48,16 @@ class IdleState:
 
         if event == RIGHT_DOWN:
             player.velocity += RUN_SPEED_PPS
+            player.dir = clamp(-1, player.velocity, 1)
         elif event == LEFT_DOWN:
             player.velocity -= RUN_SPEED_PPS
+            player.dir = clamp(-1, player.velocity, 1)
         elif event == RIGHT_UP:
             player.velocity = 1
+            player.dir = clamp(-1, player.velocity, 1)
         elif event == LEFT_UP:
             player.velocity = -1
-        player.dir = clamp(-1, player.velocity, 1)
+            player.dir = clamp(-1, player.velocity, 1)
     @staticmethod
     def exit(player, event):
         if event == X:
