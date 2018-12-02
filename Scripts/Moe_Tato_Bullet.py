@@ -10,10 +10,13 @@ FRAMES_PER_ACTION = 8
 
 class Moe_Tato_Bullet:
     image = None
-
+    weapon_sound = None
+    explosion_sound = None
     def __init__(self,x,y,velocity):
         if Moe_Tato_Bullet.image == None:
             Moe_Tato_Bullet.image = load_image('C:\\GitHub\\2DGP_TermProject\\Resources\\MoeTato\\Bullet.png')
+        if Moe_Tato_Bullet.weapon_sound == None:
+            Moe_Tato_Bullet.weapon_sound == load_wav()
         self.x, self.y, self.velocity = x, y, velocity
         self.frame = 0
         self.damage = 10
@@ -46,6 +49,6 @@ class Moe_Tato_Bullet:
         return (self.x - 45), (self.y - 50), (self.x + 50), (self.y + 50)
 
     def explosion(self):
-        self.image = load_image('C:\\GitHub\\2DGP_TermProject\Resources\\MoeTato\\Bullet_Explosion.png')
         self.isExplosion = True
+        self.image = load_image('C:\\GitHub\\2DGP_TermProject\Resources\\MoeTato\\Bullet_Explosion.png')
         self.velocity = 0

@@ -52,15 +52,18 @@ def update():
         if isinstance(game_object, Player_Bullet):
             if game_object.velocity > 0:
                 if collide(game_object.get_bb_dir_right(), moetato.get_bb_hand()) or collide(game_object.get_bb_dir_right(),moetato.get_bb_body1()) or collide(game_object.get_bb_dir_right(), moetato.get_bb_body2()):
-                    game_object.explosion()
+                    if not game_object.isExplosion:
+                        game_object.explosion()
             else:
                 if collide(game_object.get_bb_dir_left(), moetato.get_bb_hand()) or collide(game_object.get_bb_dir_left(),moetato.get_bb_body1()) or collide(game_object.get_bb_dir_left(), moetato.get_bb_body2()):
-                    game_object.explosion()
+                    if not game_object.isExplosion:
+                        game_object.explosion()
         if isinstance(game_object, Moe_Tato_Bullet):
             if not player.isHit and collide(game_object.get_bb(), player.get_bb(55, 80, 60, 75)):
-                invincibility_timer = get_time()
-                game_object.explosion()
-                player.Hit()
+                if not game_object.isExplosion:
+                    invincibility_timer = get_time()
+                    game_object.explosion()
+                    player.Hit()
         game_object.update()
 
 def draw():

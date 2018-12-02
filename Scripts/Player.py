@@ -10,10 +10,11 @@ hit_timer = None
 
 # Player Run Speed
 PIXEL_PER_METER = (10.0 / 0.3) # 10 pixel 30cm
-RUN_SPEED_KMPH = 20.0 # Km / Hour
+RUN_SPEED_KMPH = 40.0 # Km / Hour
 RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
 RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
+JUMP_SPEED_PPS = RUN_SPEED_PPS / 2
 
 # Player Action Speed
 TIME_PER_ACTION = 0.5
@@ -179,9 +180,9 @@ class JumpState:
             player.isJump = True
             jump_timer = get_time()
         if get_time() - jump_timer < 0.3:
-            player.y += RUN_SPEED_PPS * 5 * Game_FrameWork.frame_time
+            player.y += JUMP_SPEED_PPS * 5 * Game_FrameWork.frame_time
         elif get_time() - jump_timer  > 0.3:
-            player.y -= RUN_SPEED_PPS * 5 * Game_FrameWork.frame_time
+            player.y -= JUMP_SPEED_PPS * 5 * Game_FrameWork.frame_time
             if player.y <= 90:
                 player.y = 90
                 player.isJump = False
@@ -248,7 +249,7 @@ next_state_table = {
 class Player:
 
     def __init__(self):
-        self.x, self.y = 1900 // 2, 90
+        self.x, self.y = 600, 90
         self.image = load_image("C:\\GitHub\\2DGP_TermProject\\Resources\\Player\\Idle\\Player_Idle.png")
         self.dir = 1
         self.FrameIncrease = True
