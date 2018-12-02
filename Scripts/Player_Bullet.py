@@ -39,7 +39,6 @@ class Player_Bullet:
             if get_time() - self.ExplosionTime >= 0.2:
                 Game_World.remove_object(self)
             self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * Game_FrameWork.frame_time) % 7
-
         else:
             self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * Game_FrameWork.frame_time) % 4
 

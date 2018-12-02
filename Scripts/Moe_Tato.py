@@ -91,7 +91,7 @@ class MoeTato:
         self.isFire = True
         self.isDeathFrameIncrease = False
         self.event_que = []
-        self.cur_state = AttackState
+        self.cur_state = IdleState
         self.cur_state.enter(self, None)
 
 

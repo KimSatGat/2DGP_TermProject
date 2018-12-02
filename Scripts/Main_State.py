@@ -15,6 +15,8 @@ from BackGround import BackGround
 name = "MainState"
 player = None
 moetato = None
+invincibility_timer = None
+isInvincibility = False
 
 def enter():
     global player, moetato
@@ -45,8 +47,7 @@ def handle_events():
             player.handle_event(event)
 
 def update():
-    global  player, moetato
-
+    global  player, moetato, invincibility_timer
     for game_object in Game_World.all_objects():
         if isinstance(game_object, Player_Bullet):
             if game_object.velocity > 0:
@@ -57,12 +58,10 @@ def update():
                     game_object.explosion()
         if isinstance(game_object, Moe_Tato_Bullet):
             if not player.isHit and collide(game_object.get_bb(), player.get_bb(55, 80, 60, 75)):
+                invincibility_timer = get_time()
                 game_object.explosion()
                 player.Hit()
         game_object.update()
-
-
-
 
 def draw():
     clear_canvas()

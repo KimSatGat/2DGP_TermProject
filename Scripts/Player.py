@@ -6,7 +6,7 @@ import Game_World
 
 jump_timer = None
 hit_timer = None
-invincibility_timer = None
+
 
 # Player Run Speed
 PIXEL_PER_METER = (10.0 / 0.3) # 10 pixel 30cm
@@ -41,27 +41,20 @@ class IdleState:
 
     @staticmethod
     def enter(player, event):
-        global invincibility_timer
-        if player.isHit:
-            invincibility_timer = get_time()
         player.image = load_image("C:\\GitHub\\2DGP_TermProject\\Resources\\Player\\Idle\\Player_Idle.png")
         player.isRun = False
+        player.isJump = False
         player.frame = 0
+
         if event == RIGHT_DOWN:
             player.velocity += RUN_SPEED_PPS
         elif event == LEFT_DOWN:
             player.velocity -= RUN_SPEED_PPS
         elif event == RIGHT_UP:
-            player.velocity -= RUN_SPEED_PPS
+            player.velocity = 1
         elif event == LEFT_UP:
-            player.velocity += RUN_SPEED_PPS
-        elif event == TOP_DOWN:
-            player.image = load_image("C:\\GitHub\\2DGP_TermProject\\Resources\\Player\\Idle\\Player_Idle_Up.png")
-            player.updown = 1
-        elif event == TOP_UP:
-            player.image = load_image("C:\\GitHub\\2DGP_TermProject\\Resources\\Player\\Idle\\Player_Idle.png")
-            player.updown = 0
-
+            player.velocity = -1
+        player.dir = clamp(-1, player.velocity, 1)
     @staticmethod
     def exit(player, event):
         if event == X:
@@ -69,12 +62,12 @@ class IdleState:
 
     @staticmethod
     def do(player):
-        global invincibility_timer
-        if invincibility_timer == None:
-            player.isHit = False
-        elif get_time() - invincibility_timer > 1:
-            player.isHit = False
-
+        global hit_timer
+        #무적
+        if hit_timer != None:
+            if get_time() - hit_timer > 1.5:
+                player.isHit = False
+                hit_timer = None
 
         if player.FrameIncrease:
             player.frame += (FRAMES_PER_ACTION * ACTION_PER_TIME * Game_FrameWork.frame_time) % 5
@@ -89,17 +82,13 @@ class IdleState:
     @staticmethod
     def draw(player):
         if player.dir == 1:
-            if player.updown == 1:
-                player.image.clip_draw(int(player.frame) * 108, 0, 108, 175, player.x, player.y)
-                draw_rectangle(*player.get_bb(55, 80, 60, 75))
-            else:
+                if hit_timer != None:
+                    player.image.opacify(player.frame % 2)
                 player.image.clip_draw(int(player.frame) * 134, 0, 134, 161, player.x, player.y)
                 draw_rectangle(*player.get_bb(55, 80, 60, 75))
-        else:
-            if player.updown == 1:
-                player.image.clip_draw(int(player.frame) * 108, 175, 108, 175, player.x, player.y)
-                draw_rectangle(*player.get_bb(55, 80, 60, 75))
-            else:
+        elif player.dir == -1:
+                if hit_timer != None:
+                    player.image.opacify(player.frame % 2)
                 player.image.clip_draw(int(player.frame) * 133, 161, 133, 158, player.x, player.y)
                 draw_rectangle(*player.get_bb(55, 80, 60, 75))
 
@@ -107,19 +96,17 @@ class RunState:
 
     @staticmethod
     def enter(player, event):
-        global invincibility_timer
-        if player.isHit:
-            invincibility_timer = get_time()
         player.image = load_image("C:\\GitHub\\2DGP_TermProject\\Resources\\Player\\Run\\Player_Run.png")
         player.isRun = True
+        player.isJump = False
         if event == RIGHT_DOWN:
             player.velocity += RUN_SPEED_PPS
         elif event == LEFT_DOWN:
             player.velocity -= RUN_SPEED_PPS
         elif event == RIGHT_UP:
-            player.velocity -= RUN_SPEED_PPS
+            player.velocity = 1
         elif event == LEFT_UP:
-            player.velocity += RUN_SPEED_PPS
+            player.velocity = -1
         player.dir = clamp(-1, player.velocity, 1)
 
     @staticmethod
@@ -129,17 +116,16 @@ class RunState:
 
     @staticmethod
     def do(player):
-        global invincibility_timer
-        if invincibility_timer == None:
-            player.isHit = False
-        elif get_time() - invincibility_timer > 1:
-            player.isHit = False
-
-
+        global hit_timer
+        #무적 시간
+        if hit_timer != None:
+            if get_time() - hit_timer > 1.5:
+                player.isHit = False
+                hit_timer = None
         if player.isRun:
             if player.dir == 1:
                 player.frame = (player.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * ACTION_PER_TIME * Game_FrameWork.frame_time) % 16
-            else:
+            elif player.dir == -1:
                 player.frame = (player.frame - (FRAMES_PER_ACTION * ACTION_PER_TIME * ACTION_PER_TIME * Game_FrameWork.frame_time)) % 16
             player.x += player.velocity * Game_FrameWork.frame_time
         player.x = clamp(25, player.x, 1900 - 25)
@@ -148,8 +134,12 @@ class RunState:
     def draw(player):
         if player.isRun:
             if player.dir == 1:
+                if hit_timer != None:
+                    player.image.opacify(player.frame % 2)
                 player.image.clip_draw(int(player.frame) * 144, 0, 144, 162, player.x, player.y)
-            else:
+            elif player.dir == -1:
+                if hit_timer != None:
+                    player.image.opacify(player.frame % 2)
                 player.image.clip_draw(int(player.frame) * 144, 162, 144, 162, player.x, player.y)
         draw_rectangle(*player.get_bb(65, 80, 70, 70))
 
@@ -157,23 +147,17 @@ class JumpState:
 
     @staticmethod
     def enter(player, event):
-        global invincibility_timer
-        if player.isHit:
-            invincibility_timer = get_time()
+        player.isHit = False
         player.image = load_image("C:\\GitHub\\2DGP_TermProject\\Resources\\Player\\Jump\\Player_Jump.png")
         if event == RIGHT_DOWN:
             player.velocity += RUN_SPEED_PPS
-            player.dir = clamp(-1, player.velocity, 1)
         elif event == LEFT_DOWN:
             player.velocity -= RUN_SPEED_PPS
-            player.dir = clamp(-1, player.velocity, 1)
         elif event == RIGHT_UP:
-            player.velocity -= RUN_SPEED_PPS
-            player.dir = clamp(-1, player.velocity, 1)
+            player.velocity = 1
         elif event == LEFT_UP:
-            player.velocity += RUN_SPEED_PPS
-            player.dir = clamp(-1, player.velocity, 1)
-
+            player.velocity = -1
+        player.dir = clamp(-1, player.velocity, 1)
     @staticmethod
     def exit(player, event):
         if event == X:
@@ -181,13 +165,13 @@ class JumpState:
 
     @staticmethod
     def do(player):
-        global  invincibility_timer
-        global  jump_timer
-        if invincibility_timer == None:
-            player.isHit = False
-        elif get_time() - invincibility_timer > 2:
-            player.isHit = False
-
+        global  jump_timer, hit_timer
+        #무적
+        if hit_timer != None:
+            if get_time() - hit_timer > 1.5:
+                player.isHit = False
+                hit_timer = None
+        #점프
         if not player.isJump:
             player.isJump = True
             jump_timer = get_time()
@@ -210,8 +194,12 @@ class JumpState:
     @staticmethod
     def draw(player):
         if player.dir == 1:
+            if hit_timer != None:
+                player.image.opacify(player.frame % 2)
             player.image.clip_draw(int(player.frame) * 88, 0, 88, 109, player.x, player.y)
-        else:
+        elif player.dir == -1:
+            if hit_timer != None:
+                player.image.opacify(player.frame % 2)
             player.image.clip_draw(int(player.frame) * 88, 109, 80, 109, player.x, player.y)
         draw_rectangle(*player.get_bb(40, 60, 40, 50))
 
@@ -219,10 +207,7 @@ class HitState:
 
     @staticmethod
     def enter(player, event):
-        global hit_timer
         player.image = load_image("C:\\GitHub\\2DGP_TermProject\\Resources\\Player\\Hit\\Player_Hit.png")
-        player.isHit = True
-        hit_timer = get_time()
         player.frame = 0
 
     @staticmethod
@@ -231,8 +216,16 @@ class HitState:
 
     @staticmethod
     def do(player):
-        if get_time() - hit_timer > 0.5:
-            player.add_event(GROUND_Idle)
+        global hit_timer
+        if not player.isHit:
+            player.isHit = True
+            hit_timer = get_time()
+        if get_time() - hit_timer > 0.2:
+                player.velocity = 0
+                player.add_event(GROUND_Idle)
+        if player.y >= 90:
+            player.y = 90
+            player.isJump = True
         player.frame = (player.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * Game_FrameWork.frame_time) % 6
 
     @staticmethod
@@ -242,12 +235,11 @@ class HitState:
         else:
             player.image.clip_draw(int(player.frame) * 125, 221, 125, 221, player.x, player.y)
 
-
 next_state_table = {
     IdleState: {RIGHT_DOWN: RunState, LEFT_DOWN: RunState, RIGHT_UP: IdleState, LEFT_UP: IdleState, TOP_UP: IdleState, TOP_DOWN: IdleState, SPACE: JumpState, X: IdleState, HIT: HitState},
     RunState: {RIGHT_DOWN: RunState, LEFT_DOWN: RunState, RIGHT_UP: IdleState, LEFT_UP: IdleState, SPACE: JumpState, X: RunState, HIT: HitState},
     JumpState: {RIGHT_DOWN: JumpState, LEFT_DOWN: JumpState, RIGHT_UP: JumpState, LEFT_UP: JumpState, GROUND_Idle : IdleState, Ground_Run : RunState, X: JumpState, HIT: HitState},
-    HitState: {GROUND_Idle: IdleState}
+    HitState: {GROUND_Idle: IdleState, Ground_Run: RunState}
 }
 
 class Player:
@@ -268,8 +260,9 @@ class Player:
         self.cur_state.enter(self, None)
 
     def fire_bullet(self, offset_Position_X,offset_Position_Y):
-        player_bullet = Player_Bullet(self.x + offset_Position_X, self.y + offset_Position_Y, self.dir*10)
-        Game_World.add_object(player_bullet, 1)
+        if self.dir != 0:
+            player_bullet = Player_Bullet(self.x + offset_Position_X, self.y + offset_Position_Y, self.dir*10)
+            Game_World.add_object(player_bullet, 1)
 
     def get_bb(self, offset_left, offset_bottom, offset_right, offset_top):
         return (self.x - offset_left), (self.y - offset_bottom), (self.x + offset_right), (self.y + offset_top)
