@@ -5,6 +5,8 @@ import os
 from pico2d import *
 import Game_FrameWork
 import Game_World
+import Rank_State
+import Start_State
 
 from Player import Player
 from Player_Bullet import Player_Bullet
@@ -17,9 +19,10 @@ player = None
 moetato = None
 invincibility_timer = None
 isInvincibility = False
+game_over_time = None
 
 def enter():
-    global player, moetato
+    global player, moetato, background
     player = Player()
     moetato = MoeTato()
     background = BackGround()
@@ -47,20 +50,38 @@ def handle_events():
             player.handle_event(event)
 
 def update():
-    global  player, moetato, invincibility_timer
+    global  player, moetato, invincibility_timer, game_over_time, background
+    if game_over_time != None:
+        if get_time() - game_over_time > 1.5:
+            Game_FrameWork.change_state(Start_State)
     for game_object in Game_World.all_objects():
         if isinstance(game_object, Player_Bullet):
             if game_object.velocity > 0:
                 if collide(game_object.get_bb_dir_right(), moetato.get_bb_hand()) or collide(game_object.get_bb_dir_right(),moetato.get_bb_body1()) or collide(game_object.get_bb_dir_right(), moetato.get_bb_body2()):
                     if not game_object.isExplosion:
+                        moetato.hp = moetato.hp - 1
                         game_object.explosion()
+                        if moetato.hp <= 0:
+                            moetato.isDeath = True
+                            background.isVictory_sound = True
+                            background.isVictory = True
+                            if game_over_time == None:
+                                game_over_time = get_time()
             else:
                 if collide(game_object.get_bb_dir_left(), moetato.get_bb_hand()) or collide(game_object.get_bb_dir_left(),moetato.get_bb_body1()) or collide(game_object.get_bb_dir_left(), moetato.get_bb_body2()):
                     if not game_object.isExplosion:
+                        moetato.hp = moetato.hp - 1
                         game_object.explosion()
+                        if moetato.hp <= 0:
+                            pass
         if isinstance(game_object, Moe_Tato_Bullet):
+            if moetato.isDeath:
+                Game_World.remove_object(game_object)
             if not player.isHit and collide(game_object.get_bb(), player.get_bb(55, 80, 60, 75)):
                 if not game_object.isExplosion:
+                    player.hp = player.hp - 1
+                    if player.hp <= 0:
+                        pass
                     invincibility_timer = get_time()
                     game_object.explosion()
                     player.Hit()

@@ -9,12 +9,13 @@ import Game_World
 TIME_PER_ACTION = 0.5
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
 FRAMES_PER_ACTION = 5
+IDLE, ATTACK, DEATH = range(3)
 
 class IdleState:
 
     @staticmethod
     def enter(MoeTato, event):
-        pass
+        MoeTato.idle_time = get_time()
 
     @staticmethod
     def exit(MoeTato, event):
@@ -22,6 +23,8 @@ class IdleState:
 
     @staticmethod
     def do(MoeTato):
+        if get_time() - MoeTato.idle_time > 5:
+            MoeTato.add_event(ATTACK)
         MoeTato.frame = (MoeTato.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * Game_FrameWork.frame_time) % 7
 
     @staticmethod
@@ -40,6 +43,9 @@ class AttackState:
 
     @staticmethod
     def do(MoeTato):
+        if MoeTato.isDeath:
+            MoeTato.add_event(DEATH)
+            return
         MoeTato.frame = (MoeTato.frame + (FRAMES_PER_ACTION * 2) * ACTION_PER_TIME * Game_FrameWork.frame_time) % 17
         MoeTato.image = load_image("C:\\GitHub\\2DGP_TermProject\\Resources\\MoeTato\\Attack\\Attack-" + str(int(MoeTato.frame)) + ".png")
         if int(MoeTato.frame) == 16 and MoeTato.isFire:
@@ -47,9 +53,6 @@ class AttackState:
             MoeTato.isFire = False
         if int(MoeTato.frame) < 5:
             MoeTato.isFire = True
-
-
-
 
     @staticmethod
     def draw(MoeTato):
@@ -59,6 +62,7 @@ class DeathState:
 
     @staticmethod
     def enter(MoeTato, event):
+        MoeTato.frame = 0
         MoeTato.image = load_image("C:\\GitHub\\2DGP_TermProject\\Resources\\MoeTato\\Death.png")
         MoeTato.isDeathFrameIncrease = True
 
@@ -81,22 +85,29 @@ class DeathState:
     def draw(MoeTato):
         MoeTato.image.clip_draw(int(MoeTato.frame) * 307, 0, 307, 438, MoeTato.x, MoeTato.y)
 
+next_state_table = {
+    IdleState: {ATTACK: AttackState, DEATH: DeathState},
+    AttackState: {IDLE: IdleState, DEATH: DeathState}
+}
+
 class MoeTato:
 
     def __init__(self):
         self.x, self.y = 1600, 250
         self.image = load_image("C:\\GitHub\\2DGP_TermProject\\Resources\\MoeTato\\Idle.png")
-        self.velocity = 0
         self.frame = 0
+        self.hp = 25
+        self.idle_time = 5
+        self.attack_time = 5
         self.isFire = True
+        self.isDeath = False
         self.isDeathFrameIncrease = False
         self.event_que = []
-        self.cur_state = AttackState
+        self.cur_state = IdleState
         self.cur_state.enter(self, None)
 
-
     def fire_bullet(self, offset_Position_X, offset_Position_Y):
-        moetato_bullet = Moe_Tato_Bullet(self.x + offset_Position_X, self.y + offset_Position_Y, 10)
+        moetato_bullet = Moe_Tato_Bullet(self.x + offset_Position_X, self.y + offset_Position_Y, 15)
         Game_World.add_object(moetato_bullet, 1)
 
     def add_event(self, event):
@@ -112,14 +123,6 @@ class MoeTato:
 
     def draw(self):
         self.cur_state.draw(self)
-        draw_rectangle(*self.get_bb_body1())
-        draw_rectangle(*self.get_bb_body2())
-        draw_rectangle(*self.get_bb_hand())
-
-    def handle_event(self, event):
-        if (event.type, event.key) in key_event_table:
-            key_event = key_event_table[(event.type, event.key)]
-            self.add_event(key_event)
 
     def get_bb_body1(self):
         return self.x - 130, self.y - 250, self.x + 50, self.y - 50

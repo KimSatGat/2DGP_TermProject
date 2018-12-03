@@ -1,8 +1,6 @@
 
 # layer 0: Background Objects
 # layer 1: Foreground Objects
-# layer 2: Player Bullets
-# layer 3: MoeTato Bullets
 objects = [[],[]]
 
 def add_object(o, layer):

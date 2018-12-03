@@ -2,7 +2,6 @@ from pico2d import *
 import Game_World
 import Game_FrameWork
 
-
 # Player_Bullet Action Speed
 TIME_PER_ACTION = 0.5
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
@@ -12,6 +11,7 @@ class Moe_Tato_Bullet:
     image = None
     weapon_sound = None
     explosion_sound = None
+
     def __init__(self,x,y,velocity):
         if Moe_Tato_Bullet.image == None:
             Moe_Tato_Bullet.image = load_image('C:\\GitHub\\2DGP_TermProject\\Resources\\MoeTato\\Bullet.png')
@@ -21,7 +21,7 @@ class Moe_Tato_Bullet:
             Moe_Tato_Bullet.explosion_sound = load_wav("C:\\GitHub\\2DGP_TermProject\\Resources\\Sound\\moetato_weapon_explosion.WAV")
         self.x, self.y, self.velocity = x, y, velocity
         self.frame = 0
-        self.damage = 10
+        self.damage = 1
         self.ExplosionTime = None
         self.isExplosion = False
         self.weapon_sound.set_volume(100)
@@ -36,6 +36,7 @@ class Moe_Tato_Bullet:
             draw_rectangle(*self.get_bb())
 
     def update(self):
+
         self.x -= self.velocity
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * Game_FrameWork.frame_time) % 8
 

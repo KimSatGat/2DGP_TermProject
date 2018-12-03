@@ -1,11 +1,11 @@
 import Game_FrameWork
 from pico2d import *
 from Player_Bullet import Player_Bullet
+from BackGround import BackGround
 import Game_World
 
 jump_timer = None
 hit_timer = None
-
 
 # Player Run Speed
 PIXEL_PER_METER = (10.0 / 0.3) # 10 pixel 30cm
@@ -45,7 +45,6 @@ class IdleState:
         player.isRun = False
         player.isJump = False
         player.frame = 0
-
         if event == RIGHT_DOWN:
             player.velocity += RUN_SPEED_PPS
             player.dir = clamp(-1, player.velocity, 1)
@@ -68,7 +67,7 @@ class IdleState:
         global hit_timer
         #무적
         if hit_timer != None:
-            if get_time() - hit_timer > 1.5:
+            if get_time() - hit_timer > 2:
                 player.isHit = False
                 hit_timer = None
 
@@ -81,17 +80,18 @@ class IdleState:
             if player.frame <= 0:
                 player.FrameIncrease = True
 
-
     @staticmethod
     def draw(player):
         if player.dir == 1:
                 if hit_timer != None:
-                    player.image.opacify(player.frame % 2)
+                    player.opacity = player.frame % 2
+                    player.image.opacify(clamp(0.1, player.opacity, 1))
                 player.image.clip_draw(int(player.frame) * 134, 0, 134, 161, player.x, player.y)
                 draw_rectangle(*player.get_bb(55, 80, 60, 75))
-        elif player.dir == -1:
+        else:
                 if hit_timer != None:
-                    player.image.opacify(player.frame % 2)
+                    player.opacity = player.frame % 2
+                    player.image.opacify(clamp(0.1, player.opacity, 1))
                 player.image.clip_draw(int(player.frame) * 133, 161, 133, 158, player.x, player.y)
                 draw_rectangle(*player.get_bb(55, 80, 60, 75))
 
@@ -99,18 +99,23 @@ class RunState:
 
     @staticmethod
     def enter(player, event):
+        player.frame = 0
         player.image = load_image("C:\\GitHub\\2DGP_TermProject\\Resources\\Player\\Run\\Player_Run.png")
         player.isRun = True
         player.isJump = False
         if event == RIGHT_DOWN:
             player.velocity += RUN_SPEED_PPS
+            player.dir = clamp(-1, player.velocity, 1)
         elif event == LEFT_DOWN:
             player.velocity -= RUN_SPEED_PPS
+            player.dir = clamp(-1, player.velocity, 1)
         elif event == RIGHT_UP:
-            player.velocity = 1
+            player.velocity -= RUN_SPEED_PPS
+            player.dir = clamp(-1, player.velocity, 1)
         elif event == LEFT_UP:
-            player.velocity = -1
-        player.dir = clamp(-1, player.velocity, 1)
+            player.velocity += RUN_SPEED_PPS
+            player.dir = clamp(-1, player.velocity, 1)
+
 
     @staticmethod
     def exit(player, event):
@@ -122,15 +127,16 @@ class RunState:
         global hit_timer
         #무적 시간
         if hit_timer != None:
-            if get_time() - hit_timer > 1.5:
+            if get_time() - hit_timer > 2:
                 player.isHit = False
                 hit_timer = None
         if player.isRun:
             if player.dir == 1:
                 player.frame = (player.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * ACTION_PER_TIME * Game_FrameWork.frame_time) % 16
-            elif player.dir == -1:
+                player.x += player.velocity * Game_FrameWork.frame_time
+            else:
                 player.frame = (player.frame - (FRAMES_PER_ACTION * ACTION_PER_TIME * ACTION_PER_TIME * Game_FrameWork.frame_time)) % 16
-            player.x += player.velocity * Game_FrameWork.frame_time
+                player.x += player.velocity * Game_FrameWork.frame_time
         player.x = clamp(25, player.x, 1900 - 25)
 
     @staticmethod
@@ -138,11 +144,13 @@ class RunState:
         if player.isRun:
             if player.dir == 1:
                 if hit_timer != None:
-                    player.image.opacify(player.frame % 2)
+                    player.opacity = player.frame % 2
+                    player.image.opacify(clamp(0.1, player.opacity, 1))
                 player.image.clip_draw(int(player.frame) * 144, 0, 144, 162, player.x, player.y)
-            elif player.dir == -1:
+            else:
                 if hit_timer != None:
-                    player.image.opacify(player.frame % 2)
+                    player.opacity = player.frame % 2
+                    player.image.opacify(clamp(0.1, player.opacity, 1))
                 player.image.clip_draw(int(player.frame) * 144, 162, 144, 162, player.x, player.y)
         draw_rectangle(*player.get_bb(65, 80, 70, 70))
 
@@ -150,17 +158,21 @@ class JumpState:
 
     @staticmethod
     def enter(player, event):
-        player.isHit = False
+        player.frame = 0
         player.image = load_image("C:\\GitHub\\2DGP_TermProject\\Resources\\Player\\Jump\\Player_Jump.png")
         if event == RIGHT_DOWN:
             player.velocity += RUN_SPEED_PPS
+            player.dir = clamp(-1, player.velocity, 1)
         elif event == LEFT_DOWN:
             player.velocity -= RUN_SPEED_PPS
+            player.dir = clamp(-1, player.velocity, 1)
         elif event == RIGHT_UP:
-            player.velocity = 1
+            player.velocity -= RUN_SPEED_PPS
+            player.dir = clamp(-1, player.velocity, 1)
         elif event == LEFT_UP:
-            player.velocity = -1
-        player.dir = clamp(-1, player.velocity, 1)
+            player.velocity += RUN_SPEED_PPS
+            player.dir = clamp(-1, player.velocity, 1)
+
     @staticmethod
     def exit(player, event):
         if event == X:
@@ -171,7 +183,7 @@ class JumpState:
         global  jump_timer, hit_timer
         #무적
         if hit_timer != None:
-            if get_time() - hit_timer > 1.5:
+            if get_time() - hit_timer > 2:
                 player.isHit = False
                 hit_timer = None
         #점프
@@ -198,11 +210,13 @@ class JumpState:
     def draw(player):
         if player.dir == 1:
             if hit_timer != None:
-                player.image.opacify(player.frame % 2)
+                player.opacity = player.frame % 2
+                player.image.opacify(clamp(0.1, player.opacity, 1))
             player.image.clip_draw(int(player.frame) * 88, 0, 88, 109, player.x, player.y)
-        elif player.dir == -1:
+        else:
             if hit_timer != None:
-                player.image.opacify(player.frame % 2)
+                player.opacity = player.frame % 2
+                player.image.opacify(clamp(0.1, player.opacity, 1))
             player.image.clip_draw(int(player.frame) * 88, 109, 80, 109, player.x, player.y)
         draw_rectangle(*player.get_bb(40, 60, 40, 50))
 
@@ -228,7 +242,7 @@ class HitState:
                 player.add_event(GROUND_Idle)
         if player.y >= 90:
             player.y = 90
-            player.isJump = True
+            player.isJump = False
         player.frame = (player.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * Game_FrameWork.frame_time) % 6
 
     @staticmethod
@@ -248,13 +262,16 @@ next_state_table = {
 class Player:
 
     def __init__(self):
-        self.x, self.y = 600, 90
+        self.x, self.y = 400, 90
         self.image = load_image("C:\\GitHub\\2DGP_TermProject\\Resources\\Player\\Idle\\Player_Idle.png")
         self.dir = 1
+        self.opacity = 1
+        self.hp = 3
         self.FrameIncrease = True
         self.isJump = False
         self.isRun = False
         self.isHit = False
+        self.ready_time = get_time()
         self.velocity = 0
         self.frame = 0
         self.event_que = []
@@ -274,6 +291,8 @@ class Player:
 
     def update(self):
         self.cur_state.do(self)
+        if get_time() - self.ready_time < 5:
+            return
         if len(self.event_que) > 0:
             event = self.event_que.pop()
             if (event in next_state_table[self.cur_state]) == False:
@@ -286,6 +305,8 @@ class Player:
         self.cur_state.draw(self)
 
     def handle_event(self, event):
+        if get_time() - self.ready_time < 5:
+            return
         if (event.type, event.key) in key_event_table:
             key_event = key_event_table[(event.type, event.key)]
             self.add_event(key_event)
