@@ -20,15 +20,20 @@ moetato = None
 invincibility_timer = None
 isInvincibility = False
 game_over_time = None
+complete_time = None
+rank = None
 
 def enter():
-    global player, moetato, background
+    global player, moetato, background, rank
     player = Player()
     moetato = MoeTato()
     background = BackGround()
     Game_World.add_object(background, 0)
     Game_World.add_object(player, 1)
     Game_World.add_object(moetato, 1)
+
+    with open('rank_data.json', 'rt') as f:
+        rank = json.load(f)
 
 def exit():
     Game_World.clear()
@@ -50,14 +55,33 @@ def handle_events():
             player.handle_event(event)
 
 def update():
-    global  player, moetato, invincibility_timer, game_over_time, background
+    global  player, moetato, invincibility_timer, game_over_time, complete_time, background
     if game_over_time != None:
         if get_time() - game_over_time > 1.5:
-            Game_FrameWork.change_state(Start_State)
+            Game_FrameWork.change_state(Rank_State)
+    if complete_time != None:
+        if get_time() - complete_time > 1.5:
+            Game_FrameWork.change_state(Rank_State)
     for game_object in Game_World.all_objects():
+        game_object.update()
         if isinstance(game_object, Player_Bullet):
             if game_object.velocity > 0:
                 if collide(game_object.get_bb_dir_right(), moetato.get_bb_hand()) or collide(game_object.get_bb_dir_right(),moetato.get_bb_body1()) or collide(game_object.get_bb_dir_right(), moetato.get_bb_body2()):
+                    if not game_object.isExplosion:
+                        moetato.hp = moetato.hp - 1
+                        game_object.explosion()
+                        if moetato.hp <= 0 and not moetato.isDeath and not player.isDeath:
+                            moetato.isDeath = True
+                            background.isVictory_sound = True
+                            background.isVictory = True
+                            rank.append(round(background.survival_time, 2))
+                            rank.sort()
+                            with open('rank_data.json', 'wt') as f:
+                                json.dump(rank, f)
+                            if complete_time == None:
+                                complete_time = get_time()
+            else:
+                if collide(game_object.get_bb_dir_left(), moetato.get_bb_hand()) or collide(game_object.get_bb_dir_left(),moetato.get_bb_body1()) or collide(game_object.get_bb_dir_left(), moetato.get_bb_body2()):
                     if not game_object.isExplosion:
                         moetato.hp = moetato.hp - 1
                         game_object.explosion()
@@ -65,15 +89,12 @@ def update():
                             moetato.isDeath = True
                             background.isVictory_sound = True
                             background.isVictory = True
-                            if game_over_time == None:
-                                game_over_time = get_time()
-            else:
-                if collide(game_object.get_bb_dir_left(), moetato.get_bb_hand()) or collide(game_object.get_bb_dir_left(),moetato.get_bb_body1()) or collide(game_object.get_bb_dir_left(), moetato.get_bb_body2()):
-                    if not game_object.isExplosion:
-                        moetato.hp = moetato.hp - 1
-                        game_object.explosion()
-                        if moetato.hp <= 0:
-                            pass
+                            rank.append(round(background.survival_time, 2))
+                            rank.sort()
+                            with open('rank_data.json', 'wt') as f:
+                                json.dump(rank, f)
+                            if complete_time == None:
+                                complete_time = get_time()
         if isinstance(game_object, Moe_Tato_Bullet):
             if moetato.isDeath:
                 Game_World.remove_object(game_object)
@@ -81,11 +102,15 @@ def update():
                 if not game_object.isExplosion:
                     player.hp = player.hp - 1
                     if player.hp <= 0:
-                        pass
-                    invincibility_timer = get_time()
-                    game_object.explosion()
-                    player.Hit()
-        game_object.update()
+                        if game_over_time == None:
+                            game_over_time = get_time()
+                            player.isDeath = True
+                            background.isGameOver = True
+                    else:
+                        invincibility_timer = get_time()
+                        game_object.explosion()
+                        player.Hit()
+
 
 def draw():
     clear_canvas()

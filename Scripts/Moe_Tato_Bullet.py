@@ -33,7 +33,6 @@ class Moe_Tato_Bullet:
             self.image.clip_draw(int(self.frame) * 278, 0, 278, 253, self.x, self.y)
         else:
             self.image.clip_draw(int(self.frame) * 131, 0, 131, 139, self.x, self.y)
-            draw_rectangle(*self.get_bb())
 
     def update(self):
 

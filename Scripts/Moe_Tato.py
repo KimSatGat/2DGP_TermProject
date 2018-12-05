@@ -96,7 +96,7 @@ class MoeTato:
         self.x, self.y = 1600, 250
         self.image = load_image("C:\\GitHub\\2DGP_TermProject\\Resources\\MoeTato\\Idle.png")
         self.frame = 0
-        self.hp = 25
+        self.hp = 50
         self.idle_time = 5
         self.attack_time = 5
         self.isFire = True

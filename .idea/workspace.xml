@@ -4,12 +4,15 @@
     <list default="true" id="77dffdb0-224b-4d44-9373-34eda8afd3f0" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Scripts/BackGround.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/BackGround.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/Game_FrameWork.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Game_FrameWork.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Scripts/Game_World.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Game_World.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Scripts/Main_State.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Main_State.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Scripts/Moe_Tato.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Moe_Tato.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Scripts/Moe_Tato_Bullet.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Moe_Tato_Bullet.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/MyGame.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/MyGame.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Scripts/Player.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Player.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/Player_Bullet.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Player_Bullet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/Rank_State.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/Rank_State.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/rank_data.json" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/rank_data.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,110 +24,56 @@
     <session id="-1917167342">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="18" />
-          <entry key="project.open.time.0" value="3" />
-          <entry key="project.open.time.1" value="1" />
+          <entry key="project.closed" value="25" />
+          <entry key="project.open.time.0" value="4" />
+          <entry key="project.open.time.1" value="2" />
+          <entry key="project.open.time.14" value="1" />
           <entry key="project.open.time.16" value="1" />
           <entry key="project.open.time.18" value="1" />
           <entry key="project.open.time.19" value="1" />
           <entry key="project.open.time.2" value="1" />
-          <entry key="project.open.time.20" value="1" />
+          <entry key="project.open.time.20" value="2" />
           <entry key="project.open.time.21" value="2" />
           <entry key="project.open.time.22" value="3" />
           <entry key="project.open.time.23" value="5" />
           <entry key="project.open.time.36" value="1" />
-          <entry key="project.opened" value="20" />
+          <entry key="project.open.time.5" value="2" />
+          <entry key="project.opened" value="26" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="json" value="1" />
-          <entry key="py" value="29" />
+          <entry key="json" value="8" />
+          <entry key="py" value="72" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JSON" value="1" />
-          <entry key="Python" value="29" />
+          <entry key="JSON" value="8" />
+          <entry key="Python" value="72" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="9361" />
+          <entry key="json" value="31" />
+          <entry key="py" value="12422" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="9361" />
+          <entry key="JSON" value="31" />
+          <entry key="Python" value="12422" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Scripts/Player_Bullet.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="327">
-              <caret line="23" column="19" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="19" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Scripts/Moe_Tato.py">
+        <entry file="file://$PROJECT_DIR$/Scripts/rank_data.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="152">
-              <caret line="98" column="20" selection-start-line="98" selection-start-column="20" selection-end-line="98" selection-end-column="20" />
-              <folding>
-                <element signature="e#0#21#0" expanded="true" />
-                <marker date="1543837362239" expanded="true" signature="322:367" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Scripts/Main_State.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="60" column="51" lean-forward="true" selection-start-line="60" selection-start-column="51" selection-end-line="60" selection-end-column="51" />
-              <folding>
-                <element signature="e#0#13#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Scripts/Game_World.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="10" column="32" lean-forward="true" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Scripts/BackGround.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="99">
-              <caret line="25" column="47" lean-forward="true" selection-start-line="25" selection-start-column="47" selection-end-line="25" selection-end-column="47" />
-              <folding>
-                <marker date="1543837247401" expanded="true" signature="1034:1039" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Scripts/Moe_Tato_Bullet.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="9" selection-start-line="9" selection-end-line="9" />
-              <folding>
-                <element signature="e#0#20#0" expanded="true" />
-              </folding>
+            <state>
+              <caret column="25" lean-forward="true" selection-start-column="25" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -140,36 +89,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>ground</find>
-      <find>fir</find>
-      <find>get</find>
-      <find>fire_bullet</find>
-      <find>v</find>
-      <find>FrameIncrease</find>
-      <find>add</find>
-      <find>ishit</find>
-      <find>fire</find>
-      <find>add_ob</find>
-      <find>idlestate</find>
-      <find>hit_timer</find>
-      <find>up</find>
-      <find>updown</find>
-      <find>velocity</find>
-      <find>cur_state.enter</find>
-      <find>handle_event</find>
-      <find>무적</find>
-      <find>hp</find>
-      <find>jump</find>
-      <find>velo</find>
-      <find>Hi</find>
-      <find>Run</find>
-      <find>RunState</find>
       <find>isHit</find>
       <find>IdleState</find>
       <find>opca</find>
       <find>self.</find>
       <find>opci</find>
       <find>ju</find>
+      <find>hp</find>
+      <find>recta</find>
+      <find>su</find>
+      <find>survi</find>
+      <find>dir</find>
+      <find>clamp</find>
+      <find>print</find>
+      <find>runstate</find>
+      <find>jumpstate</find>
+      <find>idlestate</find>
+      <find>image</find>
+      <find>count</find>
+      <find>dir_button</find>
+      <find>isRu</find>
+      <find>isRun</find>
+      <find>isIdl</find>
+      <find>pre</find>
+      <find>dir_bu</find>
+      <find>rec</find>
+      <find>`</find>
+      <find>isDeath</find>
+      <find>background</find>
+      <find>Start</find>
+      <find>Start_State</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -178,17 +127,18 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Scripts/Player_Bullet.py" />
-        <option value="$PROJECT_DIR$/Scripts/Moe_Tato_Bullet.py" />
-        <option value="$PROJECT_DIR$/Scripts/Player.py" />
         <option value="$PROJECT_DIR$/Scripts/MyGame.py" />
-        <option value="$PROJECT_DIR$/Scripts/Start_State.py" />
-        <option value="$PROJECT_DIR$/Scripts/Game_World.py" />
-        <option value="$PROJECT_DIR$/Scripts/Rank_State.py" />
-        <option value="$PROJECT_DIR$/Scripts/rank_data.json" />
-        <option value="$PROJECT_DIR$/Scripts/Main_State.py" />
+        <option value="$PROJECT_DIR$/Scripts/Moe_Tato_Bullet.py" />
+        <option value="$PROJECT_DIR$/Scripts/Game_FrameWork.py" />
         <option value="$PROJECT_DIR$/Scripts/BackGround.py" />
+        <option value="$PROJECT_DIR$/Scripts/Player_Bullet.py" />
+        <option value="$PROJECT_DIR$/Scripts/Start_State.py" />
+        <option value="$PROJECT_DIR$/Scripts/Rank_State.py" />
         <option value="$PROJECT_DIR$/Scripts/Moe_Tato.py" />
+        <option value="$PROJECT_DIR$/Scripts/Main_State.py" />
+        <option value="$PROJECT_DIR$/Scripts/Player.py" />
+        <option value="$PROJECT_DIR$/Scripts/Game_World.py" />
+        <option value="$PROJECT_DIR$/Scripts/rank_data.json" />
       </list>
     </option>
   </component>
@@ -212,11 +162,6 @@
               <item name="2DGP_TermProject" type="b2602c69:ProjectViewProjectNode" />
               <item name="2DGP_TermProject" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="2DGP_TermProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="2DGP_TermProject" type="462c0819:PsiDirectoryNode" />
-              <item name="Scripts" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -225,7 +170,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/EClass/18년2학기/2D게임프로그래밍/2018-2DGP/Labs/Lecture18" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../2DGP/Drills/Drill-15" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
@@ -283,14 +228,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14276272" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32954547" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32954547" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39914772" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -334,107 +278,123 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://C:/Program Files/Python37/Lib/site-packages/pico2d/pico2d.py">
+    <entry file="file://$PROJECT_DIR$/Scripts/Moe_Tato_Bullet.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="397" column="25" lean-forward="true" selection-start-line="397" selection-start-column="25" selection-end-line="397" selection-end-column="25" />
+        <state relative-caret-position="99">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Scripts/Game_FrameWork.py">
+    <entry file="file://C:/Program Files/Python37/Lib/json/decoder.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="988">
-          <caret line="52" column="23" lean-forward="true" selection-start-line="52" selection-start-column="23" selection-end-line="52" selection-end-column="23" />
+        <state relative-caret-position="6346">
+          <caret line="336" selection-start-line="336" selection-end-line="336" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Scripts/Player.py">
+    <entry file="file://C:/Program Files/Python37/Lib/json/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="177" column="22" lean-forward="true" selection-start-line="177" selection-start-column="22" selection-end-line="177" selection-end-column="22" />
+        <state relative-caret-position="6555">
+          <caret line="347" selection-start-line="347" selection-end-line="347" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharmCE2018.2/system/python_stubs/-991083293/builtins.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="186">
+          <caret line="3622" column="7" lean-forward="true" selection-start-line="3622" selection-start-column="7" selection-end-line="3622" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Scripts/BackGround.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-228">
+          <caret line="6" column="19" lean-forward="true" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Scripts/Moe_Tato.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="98" column="20" selection-start-line="98" selection-start-column="20" selection-end-line="98" selection-end-column="20" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
-            <marker date="1543833593291" expanded="true" signature="1826:1835" ph="..." />
-            <marker date="1543833593291" expanded="true" signature="8400:8419" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Scripts/Start_State.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="15" column="15" lean-forward="true" selection-end-line="34" selection-end-column="8" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-            <marker date="1543835490262" expanded="true" signature="783:788" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Scripts/rank_data.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="75" lean-forward="true" selection-start-column="75" selection-end-column="75" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Scripts/Rank_State.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="9" column="12" lean-forward="true" selection-start-line="9" selection-start-column="12" selection-end-line="9" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
+            <marker date="1544020785061" expanded="true" signature="322:367" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Scripts/MyGame.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="4" selection-start-line="4" selection-end-line="4" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="114">
+          <caret line="7" column="21" lean-forward="true" selection-start-line="7" selection-start-column="21" selection-end-line="7" selection-end-column="21" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Scripts/Moe_Tato_Bullet.py">
+    <entry file="file://$PROJECT_DIR$/Scripts/Start_State.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="9" selection-start-line="9" selection-end-line="9" />
+        <state relative-caret-position="133">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Scripts/Game_World.py">
+    <entry file="file://$PROJECT_DIR$/Scripts/Rank_State.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="10" column="32" lean-forward="true" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Scripts/BackGround.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="99">
-          <caret line="25" column="47" lean-forward="true" selection-start-line="25" selection-start-column="47" selection-end-line="25" selection-end-column="47" />
+        <state relative-caret-position="114">
+          <caret line="6" column="11" lean-forward="true" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="11" />
           <folding>
-            <marker date="1543837247401" expanded="true" signature="1034:1039" ph="..." />
+            <element signature="e#0#21#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Scripts/Player_Bullet.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="327">
-          <caret line="23" column="19" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="19" />
+        <state relative-caret-position="19">
+          <caret line="11" column="16" lean-forward="true" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Scripts/Game_World.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="9" column="33" lean-forward="true" selection-start-line="9" selection-start-column="33" selection-end-line="9" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Scripts/Player.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="189" lean-forward="true" selection-start-line="189" selection-end-line="189" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+            <marker date="1544021444149" expanded="true" signature="1114:1123" ph="..." />
+            <marker date="1544021444149" expanded="true" signature="2792:2797" ph="..." />
+            <marker date="1544021444149" expanded="true" signature="6259:6278" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Program Files/Python37/Lib/site-packages/pico2d/pico2d.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="332">
+          <caret line="399" column="22" lean-forward="true" selection-start-line="399" selection-start-column="22" selection-end-line="399" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Scripts/Game_FrameWork.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="21" column="16" lean-forward="true" selection-start-line="21" selection-start-column="16" selection-end-line="21" selection-end-column="16" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Scripts/Main_State.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
+        <state relative-caret-position="570">
           <caret line="60" column="51" lean-forward="true" selection-start-line="60" selection-start-column="51" selection-end-line="60" selection-end-column="51" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
@@ -442,14 +402,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Scripts/Moe_Tato.py">
+    <entry file="file://$PROJECT_DIR$/Scripts/rank_data.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="98" column="20" selection-start-line="98" selection-start-column="20" selection-end-line="98" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-            <marker date="1543837362239" expanded="true" signature="322:367" ph="..." />
-          </folding>
+        <state>
+          <caret column="25" lean-forward="true" selection-start-column="25" selection-end-column="25" />
         </state>
       </provider>
     </entry>

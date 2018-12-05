@@ -12,16 +12,12 @@ def change_state(state):
     stack.append(state)
     state.enter()
 
-
-
 def push_state(state):
     global stack
     if (len(stack) > 0):
         stack[-1].pause()
     stack.append(state)
     state.enter()
-
-
 
 def pop_state():
     global stack
@@ -35,13 +31,9 @@ def pop_state():
     if (len(stack) > 0):
         stack[-1].resume()
 
-
-
 def quit():
     global running
     running = False
-
-
 
 import time
 frame_time = 0.0

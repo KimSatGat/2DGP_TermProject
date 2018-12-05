@@ -31,10 +31,10 @@ class Player_Bullet:
     def draw(self):
         if self.velocity > 0:
             self.image.clip_draw(int(self.frame) * 80, 51, 80, 51, self.x, self.y)
-            draw_rectangle(*self.get_bb_dir_right())
+
         elif self.velocity < 0:
             self.image.clip_draw(int(self.frame) * 80, 0, 80, 51, self.x, self.y)
-            draw_rectangle(*self.get_bb_dir_left())
+
         else:
             self.image.clip_draw(int(self.frame) * 64, 0, 64, 60, self.x, self.y)
 
